@@ -237,11 +237,14 @@
                     <span class="text-xs text-zinc-400">Calibrate lift blocks between mat sessions.</span>
                 </div>
                 <div class="flex space-x-1.5 w-full sm:w-auto">
+                    <button onclick="autoSelectProtocol()" class="bg-brand-purple hover:bg-purple-700 text-white flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-colors shadow-[0_0_10px_rgba(147,51,234,0.3)]">
+                        <i class="fas fa-microchip mr-1"></i> Auto-Assign
+                    </button>
                     <button onclick="setLiftStrategy('beastly')" id="btn-strat-beastly" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider active">
                         Beastly 3
                     </button>
                     <button onclick="setLiftStrategy('dfw')" id="btn-strat-dfw" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider">
-                        DFW Grappler
+                        DFW
                     </button>
                     <button onclick="setLiftStrategy('hybrid')" id="btn-strat-hybrid" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider">
                         Hybrid Peak
@@ -251,10 +254,10 @@
             
             <!-- Tactical Deployment Guide -->
             <div class="bg-zinc-950/60 border border-zinc-800 rounded-lg p-3 text-[10px] text-zinc-400 font-mono leading-relaxed shadow-inner">
-                <strong class="text-brand-purple block mb-1"><i class="fas fa-sitemap mr-1"></i> DEPLOYMENT GUIDE:</strong>
-                <span class="text-white font-bold">BEASTLY 3:</span> CNS is Green (CO2 >60s). Focus is 1RM Absolute Force. Minimal volume.<br>
-                <span class="text-white font-bold">DFW GRAPPLER:</span> CNS is Amber (CO2 40-60s) or joints ache. Focus is armor & density (24s).<br>
-                <span class="text-white font-bold">HYBRID PEAK:</span> Max 1x/week. Requires 72hr recovery gap before BJJ. High systemic cost.
+                <strong class="text-brand-purple block mb-1"><i class="fas fa-sitemap mr-1"></i> THE STRUCTURAL DECISION TREE (AUTOREGULATION):</strong>
+                <span class="text-emerald-500 font-bold">CO2 > 60s (GREEN):</span> CNS is primed. Roll D6: [1-2] Beastly 3, [3-4] DFW Grappler, [5-6] Hybrid Peak.<br>
+                <span class="text-yellow-500 font-bold">CO2 40-59s (AMBER):</span> CNS is stable but fatigued. Forced DFW Grappler (Density/Armor, no 1RMs).<br>
+                <span class="text-red-500 font-bold">CO2 < 40s (RED):</span> CNS is exhausted. Forced Active Recovery (Zone 2, M.A.P. Flush).
             </div>
         </div>
     </div>
@@ -571,7 +574,7 @@
         let currentStrategy = 'beastly'; 
         let fallbacksActive = { MON: false, WED: false, SAT: false };
 
-        const fallbackContent = `<span class="text-zinc-400 block mb-1">Deploying <strong>Yosuda & TGU Q&D Matrix</strong> active recovery flush.</span><span class="text-zinc-400 block">1. 15s Yosuda Sprint (Level 10) + 1 TGU each side on Q&D Timer. <br>2. <strong>Up to 5 rounds (ONLY on high CO2 tolerance days).</strong> Active fluid drainage.</span><span class="text-brand-emerald text-xs font-bold block mt-2"><i class="fas fa-shield-alt mr-1"></i> ACTIVE RECOVERY FLUSH</span>`;
+        const fallbackContent = `<span class="text-zinc-400 block mb-1">Deploying <strong>Yosuda & TGU Q&D Matrix</strong> active recovery flush.</span><span class="text-zinc-400 block">1. 15s Yosuda Sprint (Level 10) + 1 TGU each side on Q&D Timer. <br>2. <strong>Rounds based on CO2 Status (See Autoregulation Engine).</strong> Active fluid drainage.</span><span class="text-brand-emerald text-xs font-bold block mt-2"><i class="fas fa-shield-alt mr-1"></i> ACTIVE RECOVERY FLUSH</span>`;
 
         function getDynamicSchedule() {
             let liftingDayContent = '';
@@ -702,12 +705,12 @@
 
         function switchTool(tool) {
             document.getElementById('tool-btn-map').classList.toggle('active', tool === 'map');
-            document.getElementById('tool-btn-dice').classList.toggle('active', tool === 'dice');
+            document.getElementById('tool-btn-dfw').classList.toggle('active', tool === 'dfw');
             document.getElementById('tool-btn-qd').classList.toggle('active', tool === 'qd');
             document.getElementById('tool-btn-snatch').classList.toggle('active', tool === 'snatch');
             
             document.getElementById('tool-map').classList.toggle('hidden', tool !== 'map');
-            document.getElementById('tool-dice').classList.toggle('hidden', tool !== 'dice');
+            document.getElementById('tool-dfw').classList.toggle('hidden', tool !== 'dfw');
             document.getElementById('tool-qd').classList.toggle('hidden', tool !== 'qd');
             document.getElementById('tool-snatch').classList.toggle('hidden', tool !== 'snatch');
         }
@@ -718,6 +721,37 @@
 
             document.getElementById('doc-singles').classList.toggle('hidden', tab !== 'singles');
             document.getElementById('doc-snatch').classList.toggle('hidden', tab !== 'snatch');
+        }
+        
+        function autoSelectProtocol() {
+            const co2 = parseInt(document.getElementById('co2-input').value) || 0;
+            if (co2 === 0) {
+                alert("Please enter your CO2 Tolerance (SEC) in the Autoregulation Engine first.");
+                return;
+            }
+
+            let strategy = 'dfw';
+
+            if (co2 < 40) {
+                strategy = 'dfw';
+                alert("SYSTEM REDLINE (CO2 < 40s): CNS exhausted. \n\nACTION: Defaulting to DFW parameters, but execute with LIGHT BELLS ONLY (Active Recovery / Zone 2). Do not attempt absolute force today.");
+            } else if (co2 >= 40 && co2 < 60) {
+                strategy = 'dfw';
+                alert("SYSTEM AMBER (CO2 40-59s): CNS is stable but accumulating fatigue. \n\nACTION: Assigned DFW Grappler to build density and armor. No 1RM attempts today.");
+            } else {
+                const roll = Math.floor(Math.random() * 6) + 1;
+                if (roll <= 2) {
+                    strategy = 'beastly';
+                    alert(`SYSTEM GREEN (CO2 > 60s): CNS is highly potentiated.\n\nDICE ROLL: [${roll}] -> Assigned BEASTLY 3. Execute absolute force singles today.`);
+                } else if (roll <= 4) {
+                    strategy = 'dfw';
+                    alert(`SYSTEM GREEN (CO2 > 60s): CNS is highly potentiated.\n\nDICE ROLL: [${roll}] -> Assigned DFW GRAPPLER. Execute heavy density training today.`);
+                } else {
+                    strategy = 'hybrid';
+                    alert(`SYSTEM GREEN (CO2 > 60s): CNS is highly potentiated.\n\nDICE ROLL: [${roll}] -> Assigned HYBRID PEAK. Execute absolute force singles followed by DFW back-off volume.`);
+                }
+            }
+            setLiftStrategy(strategy);
         }
 
         // --- STOCHASTIC DFW CALCULATOR ---
@@ -794,11 +828,9 @@
                 return;
             }
             
-            const unit = currentModality === 'yosuda' ? 'RPM' : 'SPM';
-            
-            document.getElementById('zone-base').innerText = `${Math.round(val * 0.7)} ${unit}`;
-            document.getElementById('zone-clear').innerText = `${Math.round(val * 0.9)} / ${Math.round(val * 0.5)} ${unit}`;
-            document.getElementById('zone-alactic').innerText = `${Math.round(val * 1.3)}+ ${unit}`;
+            document.getElementById('zone-base').innerText = `${Math.round(val * 0.7)} RPM`;
+            document.getElementById('zone-clear').innerText = `${Math.round(val * 0.9)} / ${Math.round(val * 0.5)} RPM`;
+            document.getElementById('zone-alactic').innerText = `${Math.round(val * 1.3)}+ RPM`;
             
             zonesCard.classList.remove('hidden');
         }
@@ -817,11 +849,11 @@
                 statusEl.innerHTML = "VAGAL STATUS: HIGHLY POTENTIATED<br><span class='text-brand-emerald'>CLEARED: UP TO 5 ROUNDS YOSUDA + TGU PROTOCOL</span>";
                 statusEl.className = "text-[10px] font-mono mt-1.5 text-emerald-500 font-bold uppercase tracking-wider leading-relaxed";
             } else if (val >= 40) {
-                statusEl.innerText = "VAGAL STATUS: STABLE // REDUCE WORK SETS";
-                statusEl.className = "text-[10px] font-mono mt-1.5 text-yellow-500 font-bold uppercase tracking-wider";
+                statusEl.innerHTML = "VAGAL STATUS: STABLE // REDUCE WORK SETS<br><span class='text-yellow-500'>RESTRICTED: MAX 2-3 ROUNDS YOSUDA + TGU</span>";
+                statusEl.className = "text-[10px] font-mono mt-1.5 text-yellow-500 font-bold uppercase tracking-wider leading-relaxed";
             } else {
-                statusEl.innerText = "VAGAL STATUS: EXHAUSTED // ZERO CONCENTRIC PRESSING";
-                statusEl.className = "text-[10px] font-mono mt-1.5 text-red-500 font-bold uppercase tracking-wider animate-pulse";
+                statusEl.innerHTML = "VAGAL STATUS: EXHAUSTED // ZERO CONCENTRIC PRESSING<br><span class='text-red-500'>RESTRICTED: ACTIVE RECOVERY ONLY</span>";
+                statusEl.className = "text-[10px] font-mono mt-1.5 text-red-500 font-bold uppercase tracking-wider animate-pulse leading-relaxed";
             }
         }
 
