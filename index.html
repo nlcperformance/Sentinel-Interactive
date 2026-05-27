@@ -248,21 +248,31 @@
         </div>
 
         <!-- Non-BJJ Strategy Switcher -->
-        <div class="glass-card p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="text-left w-full sm:w-auto">
-                <span class="text-xs font-mono text-brand-purple uppercase tracking-widest font-bold block mb-1">Lifting Strategy Select</span>
-                <span class="text-xs text-zinc-400">Calibrate lift blocks between mat sessions.</span>
+        <div class="glass-card p-4 flex flex-col gap-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="text-left w-full sm:w-auto">
+                    <span class="text-xs font-mono text-brand-purple uppercase tracking-widest font-bold block mb-1">Lifting Strategy Select</span>
+                    <span class="text-xs text-zinc-400">Calibrate lift blocks between mat sessions.</span>
+                </div>
+                <div class="flex space-x-1.5 w-full sm:w-auto">
+                    <button onclick="setLiftStrategy('beastly')" id="btn-strat-beastly" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider active">
+                        Beastly 3
+                    </button>
+                    <button onclick="setLiftStrategy('dfw')" id="btn-strat-dfw" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider">
+                        DFW Grappler
+                    </button>
+                    <button onclick="setLiftStrategy('hybrid')" id="btn-strat-hybrid" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider">
+                        Hybrid Peak
+                    </button>
+                </div>
             </div>
-            <div class="flex space-x-1.5 w-full sm:w-auto">
-                <button onclick="setLiftStrategy('beastly')" id="btn-strat-beastly" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider active">
-                    Beastly 3
-                </button>
-                <button onclick="setLiftStrategy('dfw')" id="btn-strat-dfw" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider">
-                    DFW Grappler
-                </button>
-                <button onclick="setLiftStrategy('hybrid')" id="btn-strat-hybrid" class="btn-toggle flex-1 sm:flex-none px-3 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider">
-                    Hybrid Peak
-                </button>
+            
+            <!-- Tactical Deployment Guide -->
+            <div class="bg-zinc-950/60 border border-zinc-800 rounded-lg p-3 text-[10px] text-zinc-400 font-mono leading-relaxed shadow-inner">
+                <strong class="text-brand-purple block mb-1"><i class="fas fa-sitemap mr-1"></i> DEPLOYMENT GUIDE:</strong>
+                <span class="text-white font-bold">BEASTLY 3:</span> CNS is Green (CO2 >60s). Focus is 1RM Absolute Force. Minimal volume.<br>
+                <span class="text-white font-bold">DFW GRAPPLER:</span> CNS is Amber (CO2 40-60s) or joints ache. Focus is armor & density (24s).<br>
+                <span class="text-white font-bold">HYBRID PEAK:</span> Max 1x/week. Requires 72hr recovery gap before BJJ. High systemic cost.
             </div>
         </div>
     </div>
@@ -413,20 +423,20 @@
                 </div>
                 <div id="dfw-output" class="w-full bg-zinc-950/60 p-3 rounded-xl border border-zinc-900 text-xs font-mono text-left hidden">
                     <div class="text-brand-purple font-black uppercase text-[10px]">ALACTIC PATHWAY:</div>
-                    <p id="dfw-scheme" class="text-zinc-300 mt-1 text-[11px]"></p>
-                </div>
-            </div>
-
-            <!-- TOOL: YOSUDA MAP ZONE CALCULATOR -->
-            <div id="tool-map" class="glass-card p-6 space-y-4 hidden">
+            <!-- YOSUDA MAP ZONE CALCULATOR -->
+            <div class="glass-card p-6 space-y-4">
                 <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
-                    <i class="fas fa-tachometer-alt text-brand-purple"></i> Yosuda MAP Calculator
+                    <i class="fas fa-tachometer-alt text-brand-purple"></i> M.A.P. Engine Calculator
                 </h3>
+                <div class="flex space-x-2">
+                    <button id="btn-yosuda" onclick="setModality('yosuda')" class="btn-toggle active flex-1 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider font-mono">YOSUDA</button>
+                    <button id="btn-kb" onclick="setModality('kb')" class="btn-toggle flex-1 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider font-mono">KETTLEBELL</button>
+                </div>
                 <div class="bg-zinc-950/60 p-3 rounded-lg border border-zinc-900">
-                    <label class="block text-[10px] font-mono text-zinc-500 uppercase mb-2">Maximum Aerobic Power (Lvl 10)</label>
+                    <label id="input-label" class="block text-[10px] font-mono text-zinc-500 uppercase mb-2">Maximum Aerobic Power (RPM at Lvl 10)</label>
                     <div class="relative flex items-center">
                         <input type="number" id="map-input" placeholder="e.g. 60" class="w-full bg-zinc-950 border border-zinc-800 rounded py-2 px-3 text-white font-mono text-sm focus:border-brand-purple focus:outline-none" oninput="calculateMAP()">
-                        <span class="absolute right-3 text-xs font-mono text-zinc-600 font-bold">RPM</span>
+                        <span id="input-unit" class="absolute right-3 text-xs font-mono text-zinc-600 font-bold">RPM</span>
                     </div>
                 </div>
                 <div id="map-zones" class="space-y-2.5 hidden">
@@ -642,15 +652,15 @@
             if (currentStrategy === 'beastly') {
                 liftingDayContent_TUE = `
                     <span class="text-zinc-100 block font-bold mb-1"><i class="fa-solid fa-fire text-brand-purple mr-1.5"></i>BEASTLY 3 ABSOLUTE FORCE</span>
-                    <span class="text-zinc-400 block mb-1">1. <strong>Strict Overhead Press</strong> ($32\\text{kg}-40\\text{kg}$): 3-6 Autoregulated Singles. Rest 'Until Ready'.</span>
-                    <span class="text-zinc-400 block mb-1">2. <strong>Box Pistol Squats</strong> ($24\\text{kg}-32\\text{kg}$ @ 18" Box): 3-6 Singles per side.</span>
+                    <span class="text-zinc-400 block mb-1">1. <strong>Strict Overhead Press</strong> (32kg-40kg): 3-6 Autoregulated Singles. Rest 'Until Ready'.</span>
+                    <span class="text-zinc-400 block mb-1">2. <strong>Box Pistol Squats</strong> (24kg-32kg @ 18" Box): 3-6 Singles per side.</span>
                     <span class="text-zinc-400 block">3. <strong>Tactical Pull-Ups</strong> (Bodyweight or Weighted): 3-6 Singles. Focus on chin-clearance and deep eccentric.</span>
                     <span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-hourglass-half mr-1"></i> AUTOREGULATED REST (2-4 MINS)</span>
                 `;
                 liftingDayContent_THU = `
                     <span class="text-zinc-100 block font-bold mb-1"><i class="fa-solid fa-stopwatch text-brand-purple mr-1.5"></i>ALACTIC ENGINE (SPEED CORE)</span>
-                    <span class="text-zinc-400 block mb-1">1. <strong>Overspeed Swings</strong> ($32\\text{kg}$): 10s ON (Maximum Violence) / 50s OFF. 10 sets (OTM).</span>
-                    <span class="text-zinc-400 block">2. <strong>Snatch Skill Practice</strong> ($24\\text{kg}$): 5 sets x 5 L/R. Focus on 'The Float' and quiet lockouts.</span>
+                    <span class="text-zinc-400 block mb-1">1. <strong>Overspeed Swings</strong> (32kg): 10s ON (Maximum Violence) / 50s OFF. 10 sets (OTM).</span>
+                    <span class="text-zinc-400 block">2. <strong>Snatch Skill Practice</strong> (24kg): 5 sets x 5 L/R. Focus on 'The Float' and quiet lockouts.</span>
                     <span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-wind mr-1"></i> PURE NASAL BREATHING FOR COMT RESET</span>
                 `;
             } else if (currentStrategy === 'dfw') {
@@ -670,7 +680,7 @@
             } else if (currentStrategy === 'hybrid') {
                 liftingDayContent_TUE = `
                     <span class="text-zinc-100 block font-bold mb-1"><i class="fa-solid fa-bolt-lightning text-brand-purple mr-1.5"></i>THE HYBRID PEAK</span>
-                    <span class="text-zinc-400 block mb-1">1. <strong>Beastly 3 Max Singles Block</strong>: Press & Pull ($32\\text{kg}-40\\text{kg}$). Hit exactly 3 perfect max-velocity singles per arm.</span>
+                    <span class="text-zinc-400 block mb-1">1. <strong>Beastly 3 Max Singles Block</strong>: Press & Pull (32kg-40kg). Hit exactly 3 perfect max-velocity singles per arm.</span>
                     <span class="text-zinc-400 block mb-1">2. <strong>DFW Grappler Finisher</strong>: 10-15 Minutes. Double 24s Clean & Squat ladders (1, 2, 3 reps).</span>
                     <span class="text-zinc-400">3. Perfect merge of absolute neuromuscular recruitment and back-off volume density.</span>
                     <span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-award mr-1"></i> ADVANCED GRAPPLER OPTIMIZATION (1-2X PER WEEK ONLY)</span>
@@ -679,7 +689,7 @@
                     <span class="text-zinc-100 block font-bold mb-1"><i class="fa-solid fa-chart-line text-brand-purple mr-1.5"></i>HYBRID ALACTIC CAPACITY</span>
                     <span class="text-zinc-400 block mb-1">1. <strong>Assault Bike Sprints</strong>: 10s max-wattage push / 50s slow active nasal rest. (8-10 Rounds).</span>
                     <span class="text-zinc-400 block">2. <strong>kBox Reverse Curls</strong>: 3 sets x 6 reps (Strict 5s eccentric). Thickens COL5A1 lateral epicondyle tendon insertions.</span>
-                    <span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-dumbbell mr-1"></i> REMODELS grappling tendons</span>
+                    <span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-dumbbell mr-1"></i> REMODELS GRAPPLING TENDONS</span>
                 `;
             }
 
@@ -696,9 +706,9 @@
             const winter = {
                 MON: { title: "No-Gi BJJ (KODA:MA)", content: `<span class="text-zinc-400 block mb-1">Constraints-Led-Approach (CLA) sparring session. Highly stimulating.</span><span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-biohazard mr-1"></i> ADRENALINE PROFILE ACTIVE</span>` },
                 TUE: { title: "Lifting Session // Tue", content: liftingDayContent_TUE },
-                WED: { title: "Alactic Engine (Wednesday Shift)", content: `<span class="text-zinc-400 block mb-1">1. <strong>Overspeed Swings</strong> ($24\\text{kg}$): 10s ON / 50s OFF (x10).</span><span class="text-zinc-400 block">2. Snatches ($24\\text{kg}$) 5x5 L/R. Zero lactic burn.</span>` },
+                WED: { title: "Alactic Engine (Wednesday Shift)", content: `<span class="text-zinc-400 block mb-1">1. <strong>Overspeed Swings</strong> (24kg): 10s ON / 50s OFF (x10).</span><span class="text-zinc-400 block">2. Snatches (24kg) 5x5 L/R. Zero lactic burn.</span>` },
                 THU: { title: "Lifting Session // Thu", content: liftingDayContent_THU },
-                FRI: { title: "Active Flush & Tendons", content: `<span class="text-zinc-400 block mb-1">1. <strong>Starrett Dip Isos</strong>: 2x20s. 2. <strong>kBox Reverse Curls</strong>: 3x8 (5s slow eccentric).</span><span class="text-zinc-400">3. <strong>Yielding Iso Split Squat</strong>: 3x30s/leg.</span>` },
+                FRI: { title: "Active Flush & Tendons", content: `<span class="text-zinc-400 block mb-1">1. <strong>Starrett Dip Isos</strong>: 2x20s. 2. <strong>kBox Reverse Curls</strong>: 3x8 (5s slow eccentric).</span><span class="text-zinc-400 block">3. <strong>Yielding Iso Split Squat</strong>: 3x30s/leg.</span>` },
                 SAT: { title: "Gi BJJ (War Day)", content: `<span class="text-zinc-400 block mb-1">Uncapped combat rounds. Maximum physical output. Settle the lats into the frames.</span>` },
                 SUN: { title: "Zone 2 Base", content: `<span class="text-zinc-500 block">45m Ruck or Walk. HR strictly under 140bpm. Nasal only. Legs Up The Wall (10m).</span>` }
             };
@@ -862,77 +872,77 @@
         }
 
         // --- MAP ZONE CALCULATOR ---
+        let currentModality = 'yosuda';
+
+        function setModality(selected) {
+            currentModality = selected;
+            document.getElementById('btn-yosuda').classList.toggle('active', selected === 'yosuda');
+            document.getElementById('btn-kb').classList.toggle('active', selected === 'kb');
+
+            const unit = selected === 'yosuda' ? 'RPM' : 'SPM';
+            document.getElementById('input-label').innerText = `Maximum Aerobic Power (${unit})`;
+            document.getElementById('input-unit').innerText = unit;
+            
+            document.getElementById('protocols-yosuda').classList.toggle('hidden', selected !== 'yosuda');
+            document.getElementById('protocols-kb').classList.toggle('hidden', selected !== 'kb');
+
+            const val = parseFloat(document.getElementById('map-input').value);
+            if (!isNaN(val) && val > 0) calculateMAP();
+        }
+
         function calculateMAP() {
             const val = parseFloat(document.getElementById('map-input').value);
             const zonesCard = document.getElementById('map-zones');
             if (isNaN(val) || val <= 0) {
                 zonesCard.classList.add('hidden');
+                document.getElementById('map-empty-state').classList.remove('hidden');
+                document.getElementById('map-populated-state').classList.add('hidden');
                 return;
             }
             
-            document.getElementById('zone-base').innerText = `${Math.round(val * 0.7)} RPM`;
-            document.getElementById('zone-clear').innerText = `${Math.round(val * 0.9)} / ${Math.round(val * 0.5)} RPM`;
-            document.getElementById('zone-alactic').innerText = `${Math.round(val * 1.3)}+ RPM`;
+            const unit = currentModality === 'yosuda' ? 'RPM' : 'SPM';
+            
+            document.getElementById('zone-base').innerText = `${Math.round(val * 0.7)} ${unit}`;
+            document.getElementById('zone-clear').innerText = `${Math.round(val * 0.9)} / ${Math.round(val * 0.5)} ${unit}`;
+            document.getElementById('zone-alactic').innerText = `${Math.round(val * 1.3)}+ ${unit}`;
+            
             zonesCard.classList.remove('hidden');
-        }
 
-        function calculateCO2Status() {
-            const val = parseInt(document.getElementById('co2-input').value);
-            const statusEl = document.getElementById('co2-status');
-            
-            if (isNaN(val) || val <= 0) {
-                statusEl.innerText = "AWAITING BIOMETRICS";
-                statusEl.className = "text-[10px] font-mono mt-1.5 text-zinc-500 font-bold uppercase tracking-wider";
-                return;
-            }
+            const zones = [
+                { name: 'RECOVERY', pct: '60-70%', min: 0.60, max: 0.70, color: 'text-zinc-400', border: 'border-zinc-600' },
+                { name: 'AEROBIC', pct: '70-80%', min: 0.70, max: 0.80, color: 'text-blue-400', border: 'border-blue-500' },
+                { name: 'THRESHOLD', pct: '80-90%', min: 0.80, max: 0.90, color: 'text-yellow-400', border: 'border-yellow-500' },
+                { name: 'V02 MAX', pct: '90-100%', min: 0.90, max: 1.00, color: 'text-orange-400', border: 'border-orange-500' }
+            ];
 
-            if (val >= 60) {
-                statusEl.innerText = "VAGAL STATUS: HIGHLY POTENTIATED // GREEN LIGHT";
-                statusEl.className = "text-[10px] font-mono mt-1.5 text-emerald-500 font-bold uppercase tracking-wider";
-            } else if (val >= 40) {
-                statusEl.innerText = "VAGAL STATUS: STABLE // REDUCE WORK SETS";
-                statusEl.className = "text-[10px] font-mono mt-1.5 text-yellow-500 font-bold uppercase tracking-wider";
+            let html = '';
+            zones.forEach(z => {
+                html += `
+                <div class="bg-zinc-900 border border-zinc-800 p-3 rounded-lg border-t-2 ${z.border}">
+                    <div class="text-[10px] font-bold text-zinc-500 tracking-widest uppercase mb-1">${z.name}</div>
+                    <div class="text-xl font-bold mono ${z.color}">${Math.round(val * z.min)}-${Math.round(val * z.max)}</div>
+                </div>`;
+            });
+            document.getElementById('zone-grid').innerHTML = html;
+
+            if (currentModality === 'yosuda') {
+                document.getElementById('y-proto-1').innerText = Math.round(val * 0.70);
+                document.getElementById('y-proto-2a').innerText = Math.round(val * 0.90);
+                document.getElementById('y-proto-2b').innerText = Math.round(val * 0.50);
+                document.getElementById('y-proto-3a').innerText = Math.round(val * 1.30);
+                document.getElementById('y-proto-3b').innerText = Math.round(val * 0.30);
             } else {
-                statusEl.innerText = "VAGAL STATUS: EXHAUSTED // ZERO CONCENTRIC PRESSING";
-                statusEl.className = "text-[10px] font-mono mt-1.5 text-red-500 font-bold uppercase tracking-wider animate-pulse";
+                document.getElementById('kb-proto-1').innerText = Math.round(val * 0.70);
+                document.getElementById('kb-proto-2a').innerText = Math.round(val * 1.00);
+                document.getElementById('kb-proto-2b').innerText = Math.round(val * 0.50);
+                document.getElementById('kb-proto-3a').innerText = Math.round(val * 1.30);
             }
+
+            document.getElementById('map-empty-state').classList.add('hidden');
+            document.getElementById('map-populated-state').classList.remove('hidden');
         }
 
-        // --- QUICK & THE DEAD 8-MIN CYCLICAL LOOP TIMER LOGIC ---
-        let qdTimerInterval, qdTimeSeconds = 0, qdLoopIsActive = false;
-        
-        function updateTimelineVisual(currentSecond) {
-            const loopSecond = currentSecond % 480;
-            
-            for (let i = 0; i <= 5; i++) {
-                const el = document.getElementById(`step-${i}`);
-                el.classList.remove('bg-brand-purple/20', 'text-white', 'border-l-2', 'border-brand-purple');
-                el.classList.add('text-zinc-500');
-            }
-
-            let activeStep = -1;
-            let stepLabel = "";
-
-            if (loopSecond >= 0 && loopSecond < 45) {
-                activeStep = 0;
-                if (loopSecond < 15) stepLabel = `YOSUDA ALACTIC SPRINT (LEFT) // T-${15 - loopSecond}s`;
-                else stepLabel = `TURKISH GET-UP L CONCENTRATE // T-${45 - loopSecond}s`;
-            } else if (loopSecond >= 45 && loopSecond < 60) {
-                activeStep = 1;
-                stepLabel = `PREPARE NEXT SET L // T-${60 - loopSecond}s`;
-            } else if (loopSecond >= 60 && loopSecond < 105) {
-                activeStep = 1;
-                if (loopSecond < 75) stepLabel = `YOSUDA ALACTIC SPRINT (LEFT) // T-${75 - loopSecond}s`;
-                else stepLabel = `TURKISH GET-UP L CONCENTRATE // T-${105 - loopSecond}s`;
-            } else if (loopSecond >= 105 && loopSecond < 240) {
-                activeStep = 2;
-                stepLabel = `COMT ADRENALINE DEEP REST // T-${240 - loopSecond}s`;
-            } else if (loopSecond >= 240 && loopSecond < 285) {
-                activeStep = 3;
-                if (loopSecond < 255) stepLabel = `YOSUDA ALACTIC SPRINT (RIGHT) // T-${255 - loopSecond}s`;
-                else stepLabel = `TURKISH GET-UP R CONCENTRATE // T-${285 - loopSecond}s`;
-            } else if (loopSecond >= 285 && loopSecond < 300) {
-                activeStep = 1; 
+        // --- CO2 STATUS EVALUATOR ---
                 stepLabel = `PREPARE NEXT SET R // T-${300 - loopSecond}s`;
             } else if (loopSecond >= 300 && loopSecond < 345) {
                 activeStep = 4;
