@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OP: PURPLE SENTINEL // INTEGRATED HUDS</title>
+    <title>OP: PURPLE SENTINEL // MASTER CONSOLE v7.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,7 +12,7 @@
                     colors: {
                         brand: {
                             purple: '#9333ea', 
-                            emerald: '#10b981',
+                            emerald: '#10b981', 
                             dark: '#050507',   
                             card: '#0c0c0f',   
                             border: '#1c1c24'  
@@ -40,6 +40,12 @@
             background-attachment: fixed;
             overflow-x: hidden;
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9333ea; }
 
         .glass-card {
             background: rgba(10, 10, 13, 0.75);
@@ -86,7 +92,6 @@
 
         .vertical-text { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); }
 
-        /* Highly stylized, futuristic pulse coordinates */
         .scanner-node {
             cursor: pointer;
             transition: all 0.4s ease;
@@ -104,6 +109,18 @@
             filter: drop-shadow(0 0 16px #9333ea);
         }
 
+        .btn-toggle {
+            border: 1px solid #27272a;
+            color: #71717a;
+            transition: all 0.2s;
+        }
+        .btn-toggle.active {
+            background-color: rgba(147, 51, 234, 0.1);
+            border-color: #9333ea;
+            color: #c084fc;
+            font-weight: bold;
+        }
+
         .dice-shake { animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
             10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-6deg); }
@@ -113,7 +130,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8 font-sans selection:bg-brand-purple selection:text-white">
+<body class="min-h-screen p-4 md:p-8 selection:bg-brand-purple selection:text-white">
 
     <!-- FLOATING PRE-HAB TRIGGER -->
     <button id="warmup-trigger" class="fixed right-0 top-1/3 bg-brand-purple text-white py-6 px-2.5 rounded-l-xl font-bold text-xs tracking-widest shadow-[0_0_20px_rgba(147,51,234,0.3)] z-40 hover:bg-purple-700 transition-all duration-200 vertical-text border-l border-t border-b border-purple-500/30">
@@ -138,15 +155,15 @@
             <div class="space-y-6 text-sm">
                 <div class="border-b border-zinc-900 pb-4">
                     <strong class="text-white block font-bold font-mono text-xs flex items-center gap-2"><span class="text-brand-purple">01.</span> TIB RAISES</strong>
-                    <span class="text-zinc-400 block mt-1 leading-relaxed text-xs">20 reps. Builds ankle and Achilles armor against dynamic turf friction.</span>
+                    <span class="text-zinc-400 block mt-1 leading-relaxed text-xs">20 reps. Builds ankle and Achilles armor against dynamic BJJ mat pivot friction.</span>
                 </div>
                 <div class="border-b border-zinc-900 pb-4">
                     <strong class="text-white block font-bold font-mono text-xs flex items-center gap-2"><span class="text-brand-purple">02.</span> SINGLE LEG CALF RAISES</strong>
-                    <span class="text-zinc-400 block mt-1 leading-relaxed text-xs">15 reps/leg. Promotes lower leg resilience and tendon/fascial stiffness.</span>
+                    <span class="text-zinc-400 block mt-1 leading-relaxed text-xs">15 reps/leg. Promotes lower leg resilience and tendon/fascial stiffness (COL5A1).</span>
                 </div>
                 <div class="border-b border-zinc-900 pb-4">
                     <strong class="text-white block font-bold font-mono text-xs flex items-center gap-2"><span class="text-brand-purple">03.</span> SPRINTER'S ISO HOLDS</strong>
-                    <span class="text-zinc-400 block mt-1 leading-relaxed text-xs">20s hold/leg. Maximizes glute-hamstring synchronization and posterior line prep.</span>
+                    <span class="text-zinc-400 block mt-1 leading-relaxed text-xs">20s hold/leg. Maximizes glute-hamstring synchronization and posterior chain prep.</span>
                 </div>
                 <div class="border-b border-zinc-900 pb-4">
                     <strong class="text-white block font-bold font-mono text-xs flex items-center gap-2"><span class="text-brand-purple">04.</span> COSSACK SQUATS</strong>
@@ -181,7 +198,7 @@
                     <h1 class="text-3xl md:text-4xl font-display font-bold text-white tracking-tight uppercase">Purple Sentinel</h1>
                 </div>
                 <div class="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-zinc-400">
-                    <span>SYS v6.4</span>
+                    <span>SYS v7.0</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
                     <span>ACTN3(RR) / COMT(MET)</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
@@ -199,26 +216,43 @@
         </div>
     </header>
 
-    <!-- NAVIGATION: PHASES -->
-    <div class="max-w-7xl mx-auto mb-4">
-        <div class="flex flex-wrap gap-2">
-            <button onclick="setPhase(1)" id="btn-p1" class="nav-pill px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest">
-                Phase 1: Integrity <span class="opacity-50 ml-1 font-normal font-mono">(Feb-Mar)</span>
-            </button>
-            <button onclick="setPhase(2)" id="btn-p2" class="nav-pill px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest active">
-                Phase 2: Density <span class="opacity-50 ml-1 font-normal font-mono">(Apr-Jun)</span>
-            </button>
-            <button onclick="setPhase(3)" id="btn-p3" class="nav-pill px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest">
-                Phase 3: SFG1 Prep <span class="opacity-50 ml-1 font-normal font-mono">(Jul-Sep)</span>
-            </button>
-            <button onclick="setPhase(4)" id="btn-p4" class="nav-pill px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-widest">
-                Phase 4: Taper <span class="opacity-50 ml-1 font-normal font-mono">(Oct)</span>
-            </button>
+    <!-- SEASON CONFIGURATOR -->
+    <div class="max-w-7xl mx-auto mb-6">
+        <div class="glass-card p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <span class="text-xs font-mono text-brand-purple uppercase tracking-widest font-bold block mb-1">Season Cadence Module</span>
+                <span class="text-sm text-zinc-300">Align weekly structure with active grappling maps.</span>
+            </div>
+            <div class="flex space-x-2">
+                <button onclick="setSeason('summer')" id="btn-season-summer" class="nav-pill px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-widest active">
+                    Summer Cadence <span class="opacity-60 text-[10px]">(3x BJJ)</span>
+                </button>
+                <button onclick="setSeason('winter')" id="btn-season-winter" class="nav-pill px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-widest">
+                    Autumn Cadence <span class="opacity-60 text-[10px]">(2x BJJ)</span>
+                </button>
+            </div>
         </div>
     </div>
-    
-    <!-- NAVIGATION: MONTHS -->
-    <div class="max-w-7xl mx-auto mb-8">
+
+    <!-- NAVIGATION: PHASES & MONTHS -->
+    <div class="max-w-7xl mx-auto mb-8 space-y-4">
+        <!-- Phases -->
+        <div class="flex flex-wrap gap-2">
+            <button onclick="setPhase(1)" id="btn-p1" class="nav-pill px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest">
+                1: Integrity <span class="opacity-50 ml-1 font-normal">(Feb-Mar)</span>
+            </button>
+            <button onclick="setPhase(2)" id="btn-p2" class="nav-pill px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest active">
+                2: Density <span class="opacity-50 ml-1 font-normal">(Apr-Jun)</span>
+            </button>
+            <button onclick="setPhase(3)" id="btn-p3" class="nav-pill px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest">
+                3: SFG1 Prep <span class="opacity-50 ml-1 font-normal">(Jul-Sep)</span>
+            </button>
+            <button onclick="setPhase(4)" id="btn-p4" class="nav-pill px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest">
+                4: Taper <span class="opacity-50 ml-1 font-normal">(Oct)</span>
+            </button>
+        </div>
+        
+        <!-- Months -->
         <div id="month-container" class="flex flex-wrap gap-2 p-3 glass-card bg-black/40">
             <!-- JS Injects Month Pills Here -->
         </div>
@@ -232,7 +266,7 @@
             <div class="flex justify-between items-end mb-2 px-2">
                 <div>
                     <h2 class="font-display text-2xl font-bold text-white uppercase tracking-tight">Weekly Tactical Grid</h2>
-                    <p id="current-month-label" class="font-mono text-xs text-brand-purple tracking-widest uppercase mt-1">AWAITING SYSTEM SELECTION</p>
+                    <p id="current-month-label" class="font-mono text-xs text-brand-purple tracking-widest uppercase mt-1">ACTIVE HORIZON // MON-WED-SAT BJJ</p>
                 </div>
             </div>
             <div class="grid gap-4" id="weekly-grid">
@@ -259,14 +293,32 @@
                         <div id="co2-status" class="text-[10px] font-mono mt-1.5 text-zinc-500 font-bold uppercase tracking-wider">AWAITING BIOMETRICS</div>
                     </div>
 
-                    <div class="flex items-center justify-between pt-4 border-t border-zinc-900">
-                        <div>
-                            <span class="text-white font-bold block text-sm">No-Gi Mondays</span>
-                            <span class="text-[10px] text-zinc-500 block">Pivots Mon/Tue to save the CNS.</span>
+                    <!-- MISSED BJJ SYSTEM TRIGGER -->
+                    <div class="border-t border-zinc-900 pt-4 space-y-3">
+                        <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest font-bold block">Missed BJJ Fallback Panel</span>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-zinc-400 font-mono">Missed Monday BJJ?</span>
+                            <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" name="toggle" id="mon-fallback-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="toggleDayFallback('MON')"/>
+                                <label for="mon-fallback-toggle" class="toggle-label block overflow-hidden cursor-pointer"></label>
+                            </div>
                         </div>
-                        <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-                            <input type="checkbox" name="toggle" id="nogi-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-                            <label for="nogi-toggle" class="toggle-label block overflow-hidden cursor-pointer"></label>
+
+                        <div id="wed-fallback-row" class="flex items-center justify-between">
+                            <span class="text-xs text-zinc-400 font-mono">Missed Wednesday BJJ?</span>
+                            <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" name="toggle" id="wed-fallback-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="toggleDayFallback('WED')"/>
+                                <label for="wed-fallback-toggle" class="toggle-label block overflow-hidden cursor-pointer"></label>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-zinc-400 font-mono">Missed Saturday BJJ?</span>
+                            <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" name="toggle" id="sat-fallback-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="toggleDayFallback('SAT')"/>
+                                <label for="sat-fallback-toggle" class="toggle-label block overflow-hidden cursor-pointer"></label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -301,25 +353,25 @@
                     <i class="fas fa-calculator text-brand-purple"></i> DFW Grappler (Double 24s)
                 </h3>
                 <div class="grid grid-cols-2 gap-2">
-                    <button onclick="generateDFW(1)" class="btn-toggle text-xs py-2 px-3 rounded-lg border border-zinc-800 font-mono">LADDERS (1,2,3)</button>
-                    <button onclick="generateDFW(2)" class="btn-toggle text-xs py-2 px-3 rounded-lg border border-zinc-800 font-mono">SETS OF 3</button>
+                    <button id="btn-dfw-ladders" onclick="generateDFW(1)" class="btn-toggle text-xs py-2 px-3 rounded-lg border border-zinc-800 font-mono">LADDERS (1,2,3)</button>
+                    <button id="btn-dfw-sets" onclick="generateDFW(2)" class="btn-toggle text-xs py-2 px-3 rounded-lg border border-zinc-800 font-mono">SETS OF 3</button>
                 </div>
                 <div id="dfw-output" class="bg-zinc-950/60 p-4 rounded-xl border border-zinc-900 text-xs font-mono space-y-2 hidden">
                     <div class="text-brand-purple font-black uppercase">ALACTIC RECRUITMENT PATHWAY:</div>
-                    <p id="dfw-scheme" class="text-zinc-300"></p>
-                    <span class="text-[10px] text-zinc-500 block leading-relaxed italic border-t border-zinc-900 pt-2">No shoulder presses. Keeps lats flared and biceps packed.</span>
+                    <p id="dfw-scheme" class="text-zinc-300 mt-1"></p>
+                    <span class="text-[10px] text-zinc-500 block leading-relaxed italic border-t border-zinc-900 mt-2 pt-2">No shoulder presses. Keeps lats flared and biceps packed.</span>
                 </div>
             </div>
 
             <!-- YOSUDA MAP ZONE CALCULATOR -->
             <div class="glass-card p-6 space-y-4">
                 <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
-                    <i class="fas fa-tachometer-alt text-brand-purple"></i> Yosuda MAP Calculator
+                    <i class="fas fa-tachometer-alt text-brand-purple"></i> Yosuda MAP Calculator (Lvl 10)
                 </h3>
                 <div class="bg-zinc-950/60 p-3 rounded-lg border border-zinc-900">
-                    <label class="block text-[10px] font-mono text-zinc-500 uppercase mb-2">Maximum Aerobic Power (RPM at Lvl 10)</label>
+                    <label class="block text-[10px] font-mono text-zinc-500 uppercase mb-2">Maximum Aerobic Power</label>
                     <div class="relative flex items-center">
-                        <input type="number" id="map-input" placeholder="e.g. 65" class="w-full bg-zinc-950 border border-zinc-800 rounded py-2 px-3 text-white font-mono text-sm focus:border-brand-purple focus:outline-none" oninput="calculateMAP()">
+                        <input type="number" id="map-input" placeholder="e.g. 60" class="w-full bg-zinc-950 border border-zinc-800 rounded py-2 px-3 text-white font-mono text-sm focus:border-brand-purple focus:outline-none" oninput="calculateMAP()">
                         <span class="absolute right-3 text-xs font-mono text-zinc-600 font-bold">RPM</span>
                     </div>
                 </div>
@@ -339,6 +391,23 @@
                 </div>
             </div>
 
+            <!-- STOCHASTIC DFW DICE ROLLER -->
+            <div class="glass-card p-6 flex flex-col items-center justify-center text-center space-y-4 relative overflow-hidden">
+                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2 self-start">
+                    <i class="fas fa-dice text-brand-purple"></i> Stochastic DFW Selector
+                </h3>
+                <div id="dice-display" class="w-20 h-20 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center justify-center shadow-inner">
+                    <i id="dice-icon" class="fas fa-dice text-4xl text-zinc-600"></i>
+                </div>
+                <button onclick="rollDice()" class="w-full bg-brand-purple hover:bg-purple-700 text-white font-bold text-xs py-2.5 rounded-lg transition-colors mono tracking-widest uppercase">
+                    Roll the Bones
+                </button>
+                <div id="dice-result" class="w-full bg-zinc-950/60 border border-zinc-900 p-3 rounded-lg hidden text-left">
+                    <div id="dice-category" class="text-xs font-black mono text-brand-purple uppercase mb-1">DETERMINING LOAD...</div>
+                    <p id="dice-desc" class="text-[11px] text-zinc-400 leading-normal"></p>
+                </div>
+            </div>
+
             <!-- MONTHLY STRATAGEM -->
             <div class="glass-card p-6 highlight-border">
                 <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase mb-3 flex items-center gap-2">
@@ -350,7 +419,7 @@
         </div>
     </div>
 
-    <!-- FUTURISTIC INTERACTIVE ANATOMICAL MATRIX -->
+    <!-- HIGH-FIDELITY INTERACTIVE ANATOMICAL MATRIX -->
     <section class="max-w-7xl mx-auto glass-card p-6 md:p-8 mb-8">
         <div class="border-b border-zinc-800 pb-4 mb-6">
             <h3 class="font-display text-2xl font-bold text-white uppercase tracking-tight">Interactive Adaptation Matrix</h3>
@@ -358,7 +427,7 @@
         </div>
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Left Panel: Premium Cybernetic Vector Diagram -->
+            <!-- Left: Beautiful Vector Anatomy Blueprint -->
             <div class="lg:col-span-5 flex justify-center bg-zinc-950/30 p-6 rounded-2xl border border-zinc-900">
                 <svg id="human-blueprint" viewBox="0 0 240 400" class="w-full max-w-[280px] h-auto">
                     <!-- High-tech background coordinate targeting frames -->
@@ -367,7 +436,7 @@
                     <line x1="120" y1="0" x2="120" y2="400" stroke="#121216" stroke-width="1" />
                     <line x1="0" y1="200" x2="240" y2="200" stroke="#121216" stroke-width="1" />
 
-                    <!-- Detailed Sci-Fi Anatomical Mesh -->
+                    <!-- Detailed Sci-Fi Anatomy Mesh -->
                     <path d="M120,40 L108,52 L108,62 L120,68 L132,62 L132,52 Z" fill="none" stroke="#44444f" stroke-width="1.5" /> <!-- Helm -->
                     <circle cx="120" cy="52" r="3.5" fill="none" stroke="#9333ea" stroke-width="1" />
                     <line x1="120" y1="68" x2="120" y2="180" stroke="#44444f" stroke-width="2.5" /> <!-- Spinal column -->
@@ -452,7 +521,7 @@
                             <span id="target-id" class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-purple/20 text-brand-purple uppercase tracking-widest font-black">SYSTEM</span>
                             <h4 id="target-title" class="text-xl font-display font-bold text-white tracking-wide uppercase">CORTICAL ENERGETICS</h4>
                         </div>
-                        <p id="target-desc" class="text-sm text-zinc-400 leading-relaxed font-mono">Select an anatomical scanner node maps specific biological adaptation channels across your targeted energy grids.</p>
+                        <p id="target-desc" class="text-sm text-zinc-400 leading-relaxed font-mono">Select an anatomical scanner node to map specific biological adaptation channels across your targeted energy grids.</p>
                     </div>
                     <div id="target-metric" class="mt-4 pt-4 border-t border-zinc-900 font-mono text-xs text-brand-purple flex justify-between">
                         <span>METABOLIC PATHWAY: COMT FLUSH</span>
@@ -464,19 +533,111 @@
     </section>
 
     <script>
+        // --- CALENDAR ENGINES ---
+        let currentSeason = 'summer'; // 'summer' (3x BJJ) or 'winter' (2x BJJ)
+        let fallbacksActive = { MON: false, WED: false, SAT: false };
+
+        const fallbackContent = `<span class="text-zinc-400 block mb-1">Deploying <strong>Yosuda & TGU Q&D Matrix</strong> active recovery flush.</span><span class="text-zinc-400 block">1. 15s Yosuda Sprint (Level 10) + 1 TGU each side on Q&D Timer. 2. 2-3 rounds. Active fluid drainage.</span><span class="text-brand-emerald text-xs font-bold block mt-2"><i class="fas fa-shield-alt mr-1"></i> ACTIVE RECOVERY FLUSH</span>`;
+
+        const scheduleSummer = {
+            MON: { title: "No-Gi BJJ (KODA:MA)", content: `<span class="text-zinc-400 block mb-1">Constraints-Led-Approach (CLA) sparring session. Highly stimulating.</span><span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-biohazard mr-1"></i> ADRENALINE PROFILE ACTIVE</span>` },
+            TUE: { title: "Wrench & Active Armor", content: `<span class="text-zinc-400 block mb-1">1. <strong>Mace 360s</strong>: 3x10. 2. <strong>KB Arm-Bars</strong>: 12kg (3x5 deep nasal breaths/side).</span><span class="text-zinc-400 block">3. <strong>Starrett Dip Isos</strong>: 2x15s (Feet-assisted parallette). 4. <strong>Gladiator DL</strong>: 2x5.</span>` },
+            WED: { title: "Gi BJJ (KODA:MA)", content: `<span class="text-zinc-400 block mb-1">High friction, grip-intensive sparring. Protect fingers. Use monkey grips.</span><span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-biohazard mr-1"></i> ADRENALINE PROFILE ACTIVE</span>` },
+            THU: { title: "Alactic Engine (Speed)", content: `<span class="text-zinc-400 block mb-1">1. <strong>Overspeed Swings</strong> (24kg): 10s ON / 50s OFF (OTM for 8-10 mins).</span><span class="text-zinc-400 block">2. Strictly nasal breathing. Stop the set immediately if velocity drops.</span>` },
+            FRI: { title: "Absolute Force (Beastly 3)", content: `<span class="text-zinc-400 block mb-1">CNS 100% fresh. 1-3 Reps maximum velocity.</span><span class="text-zinc-400 block">1. <strong>Heavy Press</strong> (40kg). 2. <strong>Pistol</strong> (32kg @ 18"). 3. <strong>Heavy Pull-up</strong> (40kg).</span>` },
+            SAT: { title: "Gi BJJ (War Day)", content: `<span class="text-zinc-400 block mb-1">Uncapped combat rounds. Maximum physical output. Use your Friday strength frames.</span>` },
+            SUN: { title: "Zone 2 Base", content: `<span class="text-zinc-500 block">45m Ruck or Walk. HR strictly under 140bpm. Nasal only. Legs Up The Wall (10m).</span>` }
+        };
+
+        const scheduleWinter = {
+            MON: { title: "No-Gi BJJ (KODA:MA)", content: `<span class="text-zinc-400 block mb-1">Constraints-Led-Approach (CLA) sparring session. Highly stimulating.</span><span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-biohazard mr-1"></i> ADRENALINE PROFILE ACTIVE</span>` },
+            TUE: { title: "The Wrench (Joint Lube)", content: `<span class="text-zinc-400 block mb-1">1. <strong>Mace 360s</strong>: 3x10. 2. <strong>Kettlebell Arm-Bars</strong> (12kg) for shoulder centration.</span><span class="text-zinc-400 block">3. <strong>Neck Isos & Wrist Extensor Floss</strong>.</span>` },
+            WED: { title: "Alactic Engine (Thursday Shift)", content: `<span class="text-zinc-400 block mb-1">1. <strong>Overspeed Swings</strong> (24kg): 10s ON / 50s OFF (x10).</span><span class="text-zinc-400 block">2. Snatches (24kg) 5x5L/R. Zero lactic burn.</span>` },
+            THU: { title: "Absolute Force (Beastly 3)", content: `<span class="text-zinc-400 block mb-1">Concentric CNS peaking. 72 hours post-Monday rolls.</span><span class="text-zinc-400 block">1. <strong>Press</strong> (40kg). 2. <strong>Pistol</strong> (32kg). 3. <strong>Pull-Up</strong> (40kg). 3-6 Autoregulated Singles.</span>` },
+            FRI: { title: "Active Flush & Tendons", content: `<span class="text-zinc-400 block mb-1">1. <strong>Starrett Dip Isos</strong>: 2x20s. 2. <strong>kBox Reverse Curls</strong>: 3x8 (5s slow eccentric).</span><span class="text-zinc-400 block">3. <strong>Yielding Iso Split Squat</strong>: 3x30s/leg.</span>` },
+            SAT: { title: "Gi BJJ (War Day)", content: `<span class="text-zinc-400 block mb-1">Uncapped combat rounds. Maximum physical output. Settle the lats into the frames.</span>` },
+            SUN: { title: "Zone 2 Base", content: `<span class="text-zinc-500 block">45m Ruck or Walk. HR strictly under 140bpm. Nasal only. Legs Up The Wall (10m).</span>` }
+        };
+
+        function setSeason(season) {
+            currentSeason = season;
+            document.getElementById('btn-season-summer').classList.toggle('active', season === 'summer');
+            document.getElementById('btn-season-winter').classList.toggle('active', season === 'winter');
+
+            document.getElementById('current-month-label').innerText = season === 'summer' ? "SUMMER CADENCE // MON-WED-SAT BJJ" : "AUTUMN CADENCE // MON-SAT BJJ";
+            document.getElementById('wed-fallback-row').style.display = season === 'summer' ? 'flex' : 'none';
+
+            updateDashboard();
+        }
+
+        function toggleDayFallback(day) {
+            const toggle = document.getElementById(`${day.toLowerCase()}-fallback-toggle`);
+            fallbacksActive[day] = toggle.checked;
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            const currentSchedule = currentSeason === 'summer' ? scheduleSummer : scheduleWinter;
+            const grid = document.getElementById('weekly-grid');
+
+            let monData = fallbacksActive.MON ? { title: "Monday Recovery Matrix", content: fallbackContent } : currentSchedule.MON;
+            let wedData = fallbacksActive.WED && currentSeason === 'summer' ? { title: "Wednesday Recovery Matrix", content: fallbackContent } : currentSchedule.WED;
+            let satData = fallbacksActive.SAT ? { title: "Saturday Recovery Matrix", content: fallbackContent } : currentSchedule.SAT;
+
+            grid.innerHTML = `
+                ${createDayCard('MON', monData.title, 'fa-dumbbell', monData.content, fallbacksActive.MON ? 'border-brand-emerald bg-emerald-950/5 shadow-[0_0_15px_rgba(16,185,129,0.1)]' : '')}
+                ${createDayCard('TUE', currentSchedule.TUE.title, 'fa-bolt', currentSchedule.TUE.content, '')}
+                ${createDayCard('WED', wedData.title, 'fa-yin-yang', wedData.content, (fallbacksActive.WED && currentSeason === 'summer') ? 'border-brand-emerald bg-emerald-950/5 shadow-[0_0_15px_rgba(16,185,129,0.1)]' : '')}
+                ${createDayCard('THU', currentSchedule.THU.title, 'fa-stopwatch', currentSchedule.THU.content, '')}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                    ${createSmallCard('FRI', currentSchedule.FRI.title, 'fa-bed', currentSchedule.FRI.content)}
+                    ${createSmallCard('SAT', satData.title, 'fa-fire', satData.content, fallbacksActive.SAT ? 'border-brand-emerald bg-emerald-950/5 shadow-[0_0_15px_rgba(16,185,129,0.1)]' : 'border-zinc-700')}
+                    ${createSmallCard('SUN', currentSchedule.SUN.title, 'fa-leaf', currentSchedule.SUN.content)}
+                </div>
+            `;
+        }
+
+        function createDayCard(day, title, icon, content, extraClasses) {
+            return `
+            <div class="day-card glass-card p-5 flex flex-col md:flex-row gap-4 md:items-center ${extraClasses}">
+                <div class="w-16 h-16 shrink-0 bg-zinc-905 border border-zinc-800 rounded-xl flex flex-col items-center justify-center shadow-inner bg-black/40">
+                    <span class="text-brand-purple font-mono font-bold text-sm">${day}</span>
+                    <i class="fas ${icon} text-zinc-600 mt-1 text-xs"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="text-white font-display font-bold uppercase tracking-wider mb-2 text-sm">${title}</h4>
+                    <div class="text-zinc-400 text-sm leading-relaxed font-mono">${content}</div>
+                </div>
+            </div>`;
+        }
+
+        function createSmallCard(day, title, icon, content, extraClasses = 'border-transparent') {
+            return `
+            <div class="glass-card p-4 border ${extraClasses}">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-zinc-500 font-mono font-bold text-xs">${day}</span>
+                    <i class="fas ${icon} text-zinc-600 text-xs"></i>
+                </div>
+                <h4 class="text-white font-display font-bold text-xs uppercase tracking-wider mb-1">${title}</h4>
+                <div class="text-zinc-500 text-[10px] leading-tight font-mono">${content}</div>
+            </div>`;
+        }
+
         // --- STOCHASTIC DFW CALCULATOR ---
         function generateDFW(mode) {
-            const btns = document.querySelectorAll('.btn-toggle');
-            btns.forEach(b => b.classList.remove('active'));
+            const btnLadders = document.getElementById('btn-dfw-ladders');
+            const btnSets = document.getElementById('btn-dfw-sets');
+            btnLadders.classList.remove('active');
+            btnSets.classList.remove('active');
             
             const card = document.getElementById('dfw-output');
             const schemeEl = document.getElementById('dfw-scheme');
             
             if(mode === 1) {
-                btns[0].classList.add('active');
+                btnLadders.classList.add('active');
                 schemeEl.innerHTML = "<strong>Sets:</strong> 5 x Ladders of 1, 2, 3 reps.<br><strong>Execution:</strong> 1 Clean + 1 Front Squat, then rest. 2 Cleans + 2 Front Squats, then rest. Repeat. Avoid grinding reps.";
             } else {
-                btns[1].classList.add('active');
+                btnSets.classList.add('active');
                 schemeEl.innerHTML = "<strong>Sets:</strong> 6 sets x 3 reps across.<br><strong>Execution:</strong> Clean the double 24s, perform 3 front squats, park the bells. Rest exactly 2 mins. Maintain flawless posture.";
             }
             card.classList.remove('hidden');
@@ -516,7 +677,7 @@
                 statusEl.innerText = "VAGAL STATUS: STABLE // REDUCE WORK SETS";
                 statusEl.className = "text-[10px] font-mono mt-1.5 text-yellow-500 font-bold uppercase tracking-wider";
             } else {
-                statusEl.innerText = "VAGAL STATUS: EXHAUSTED // ZERO LOADING MANDATE";
+                statusEl.innerText = "VAGAL STATUS: EXHAUSTED // ZERO CONCENTRIC PRESSING";
                 statusEl.className = "text-[10px] font-mono mt-1.5 text-red-500 font-bold uppercase tracking-wider animate-pulse";
             }
         }
@@ -558,104 +719,43 @@
             document.getElementById('timer-display').innerText = "00:00";
             document.getElementById('timer-state').innerText = "READY TO DEPLOY";
             document.getElementById('timer-state').className = "text-[10px] font-mono text-brand-purple tracking-widest uppercase font-bold mt-2";
-            document.getElementById('metro-flash').className = "absolute inset-0 rounded-xl transition-all duration-100 opacity-10";
+            document.getElementById('metro-flash').className = "absolute inset-0 rounded-xl transition-all duration-100 opacity-10 bg-brand-purple";
         }
 
-        // --- MONTHLY PROGRESSION DATABASE (PHASE 1 - 4 PRESERVED) ---
+        // --- MONTHLY PROGRESSION DATABASE ---
         const protocols = {
             1: {
                 title: "INTEGRITY",
                 months: {
-                    FEB: {
-                        focus: "Depth Charge & Tendon Hardening.",
-                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>Mace 360s</strong>: 3x10. 2. <strong>Q&D Flush</strong>: 15s Yosuda + 1 TGU each side.</span><span class="text-zinc-400 block">3. <strong>Gladiator DL</strong>: 2-3 sets x 5 reps/side.</span>` },
-                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press & Pull (32kg+)</strong>: Ladders (1,2,3). Symmetrical focus.</span><span class="text-zinc-400 block">2. <strong>Box Pistol (24kg)</strong>: High 24" Box. 5 sets of 3.</span>` },
-                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatches (24kg)</strong>: 15s Work : 45s Rest (EMOM style).</span><span class="text-zinc-400 block">2. <strong>Total sets:</strong> 10-15 rounds. Nose breathing only.</span>` }
-                    },
-                    MAR: {
-                        focus: "Mastering the 32kg threshold to bypass neural inhibition.",
-                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>The SFG 3 (20-24kg)</strong>: 3-5 sets of 2-3 reps. The Wedge focus.</span><span class="text-zinc-400 block">2. <strong>Statue of Liberty Walk</strong>: 3x30m @ <strong>32kg</strong>.</span>` },
-                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press & Pull (32kg+)</strong>: Ladders (1,2,3). Zero grinding reps.</span><span class="text-zinc-400 block">2. <strong>Box Pistol</strong>: 24kg @ 18-inch Box. 3-5 sets x 3 reps.</span>` },
-                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Heavy Suitcase Carry</strong>: 36kg (15s/side) + <strong>Snatch Work</strong>.</span><span class="text-zinc-400 block">2. <strong>Towel Swings</strong>: 24kg. 10 sets x 5 reps. "Rip the Towel".</span>` }
-                    }
+                    FEB: { focus: "Depth Charge & Tendon Hardening." },
+                    MAR: { focus: "Mastering the 32kg threshold to bypass neural inhibition." }
                 }
             },
             2: {
                 title: "DENSITY & VOLUME",
                 months: {
-                    APR: {
-                        focus: "Neural Density I: Singles Initialization & QL Armor.",
-                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>Yosuda Sprint</strong>: 15s on/45s off + 1 TGU each side.</span><span class="text-zinc-400 block">2. <strong>Gladiator DL</strong>: 3 sets x 5 reps/side (24kg+).</span>` },
-                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press/Pull (32kg+)</strong>. 3-6 Autoregulated Singles. Rest 3 mins.</span><span class="text-zinc-400 block">2. <strong>Box Pistol (32kg)</strong>: 18-inch Box. 5x3.</span>` },
-                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatches</strong> (24kg). 10 to 15 sets x 5 reps.</span><span class="text-zinc-400 block">2. <strong>Focus:</strong> Perfect lockouts. No lactic accumulation.</span>` }
-                    },
-                    MAY: {
-                        focus: "Consolidation. Autoregulated Singles & SFG1 Practice.",
-                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>Yosuda (15s @ Lvl 10)</strong> + 1 TGU/side (32kg) on Q&D Timer.</span><span class="text-zinc-400 block">2. <strong>DFW Grappler (GTG)</strong>: Double cleans & front squats (24s).</span>` },
-                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Autoregulated Press & Pull (32kg+)</strong>: 3-6 Singles. Rest 3 mins.</span><span class="text-zinc-400 block">2. <strong>Pistol Eccentric Override</strong>: 4x1 slow negative to 16" Box.</span>` },
-                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Intervals (24kg)</strong>: 15s Work (approx 5 reps) : 45s Rest.</span><span class="text-zinc-400 block">2. <strong>Volume:</strong> 15 sets (75 reps). Nasal breathing only.</span>` }
-                    },
-                    JUN: {
-                        focus: "Systemic Strength for BJJ Translation.",
-                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>SFG1 Skills (24-28kg)</strong>: TGU Polish. Snatch pacing.</span><span class="text-zinc-400 block">2. <strong>Gladiator DL</strong>: 3 sets x 5 reps/side.</span>` },
-                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press/Pull (32kg+)</strong>. 3-6 Singles. Rest 3-5 mins.</span><span class="text-brand-purple text-xs font-bold block mt-2">RULE #3: The second your velocity drops, terminate the block.</span>` },
-                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatches</strong> (24kg). 5 sets x 10L/10R.</span><span class="text-zinc-400 block">2. <strong>Engine check:</strong> Strict 5-min cadence.</span>` }
-                    }
+                    APR: { focus: "Neural Density I: Singles Initialization & QL Armor." },
+                    MAY: { focus: "Consolidation. Autoregulated Singles & SFG1 Practice." },
+                    JUN: { focus: "Systemic Strength for BJJ Translation." }
                 }
             },
             3: {
                 title: "SFG1 PREP",
                 months: {
-                    JUL: {
-                        focus: "Transitioning to Double 24kg Volume.",
-                        mon: { title: "SFG1 Skill", content: `<span class="text-zinc-400 block mb-1">1. <strong>SFG1 Skills (2x24kg)</strong>: Double Cleans & Squats. 3-5 sets of 2-3 reps.</span><span class="text-zinc-400 block">2. <strong>Static Rack Holds</strong>: 3x20s @ <strong>32kg</strong>.</span>` },
-                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Double Press/Front Squat</strong> (2x24kg). 5 sets x 2-3 reps.</span><span class="text-zinc-400 block">2. <strong>Pull-Up (32kg+)</strong>: Heavy Singles. 3-6 reps total.</span>` },
-                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Intervals</strong> (24kg). 15s Work : 45s Rest.</span><span class="text-zinc-400 block">2. Volume: 10-15 Rounds. Explosive power, zero burn.</span>` }
-                    },
-                    AUG: {
-                        focus: "Double 24kg Density for SFG1.",
-                        mon: { title: "SFG1 Skill", content: `<span class="text-zinc-400 block mb-1">1. <strong>The SFG 3 (24kg)</strong>: TGU and Snatch pacing.</span><span class="text-zinc-400 block">2. <strong>Waiter Walks</strong>: 3x30m @ 24kg.</span>` },
-                        tue: { title: "SFG1 Heavy Day", content: `<span class="text-zinc-400 block mb-1">1. <strong>Double Clean & Press</strong> (2x24kg). 5 ladders of 1, 2, 3.</span><span class="text-zinc-400 block">2. <strong>Double Front Squat</strong> (2x24kg). 3 sets x 5 reps.</span>` },
-                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Intervals</strong> (24kg). 15s Work : 30s Rest.</span><span class="text-zinc-400 block">2. Volume: 12-18 Rounds. Rhythm and relaxation.</span>` }
-                    },
-                    SEP: {
-                        focus: "SFG1 Peaking and The 5-Minute Snatch Test.",
-                        mon: { title: "SFG1 Skill", content: `<span class="text-zinc-400 block mb-1">1. <strong>SFG1 Skills (2x24kg)</strong>: Complexes. 3-5 sets of 2 reps. Perfect groove.</span><span class="text-zinc-400 block">2. <strong>Double Static Rack Holds</strong>: 3x15s @ 2x24kg.</span>` },
-                        tue: { title: "SFG1 Rehearsal", content: `<span class="text-zinc-400 block mb-1">1. <strong>Double 24kg Complexes</strong>: 1 Clean, 1 Press, 1 Squat. (x5 rounds).</span><span class="text-zinc-400 block">2. <strong>Heavy TGU</strong>: 32kg. 3 singles per side.</span>` },
-                        thu: { title: "Test Prep", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Test Rehearsal</strong> (24kg). 20 Rounds (15s on / 15s off).</span><span class="text-zinc-400 block">2. Target: 5 reps per 15s interval (=100 reps).</span>` }
-                    }
+                    JUL: { focus: "Transitioning to Double 24kg Volume." },
+                    AUG: { focus: "Double 24kg Density for SFG1." },
+                    SEP: { focus: "SFG1 Peaking and The 5-Minute Snatch Test." }
                 }
             },
             4: {
                 title: "TAPER & PEAK",
                 months: {
-                    OCT: {
-                        focus: "SFG1 Certification Weekend.",
-                        mon: { title: "Decompression", content: `<span class="text-zinc-400 block mb-1"><strong>Weeks 1 & 2:</strong> 15 mins of Shin Boxes, 90-90 breathing, and light walking.</span><span class="text-brand-purple text-xs font-bold block mt-2">NO GLADIATORS. NO HEAVY LOAD. Let the CNS recover.</span>` },
-                        tue: { title: "Cut & Prime", content: `<span class="text-zinc-400 block mb-1"><strong>Week 1 (50% Load):</strong> Double 16kg Press/Squat. 3x3 reps. Easy.</span><span class="text-zinc-400 block"><strong>Week 2 (Neural Prime):</strong> Floor Press (24kg). 3x5 explosive. No legs.</span>` },
-                        thu: { title: "Mobility Flush", content: `<span class="text-zinc-400 block mb-1"><strong>Week 1:</strong> 24kg Swings. 5 sets x 10 reps.</span><span class="text-zinc-400 block"><strong>Week 2:</strong> Walking & Visualisation ONLY.</span>` }
-                    }
+                    OCT: { focus: "SFG1 Certification Weekend." }
                 }
             }
         };
 
-        const staticDays = {
-            WED: { title: "BJJ Flow / Reset", icon: "fa-yin-yang", content: "<strong>Coaching Day:</strong> 10k+ steps.<br><strong>BJJ:</strong> Flow/Drill only. Use Red Light Belt on left shoulder during commute." },
-            FRI: { title: "Deep Rest", icon: "fa-bed", content: "<strong>CNS Reboot:</strong> Non-negotiable OFF day. Deep Tissue Therapy if booked." },
-            SAT: { title: "War Day", icon: "fa-fire", content: "<strong>BJJ Application:</strong> High arousal rounds. Let the strength translate to the mats." },
-            SUN: { title: "Zone 2 Ruck", icon: "fa-leaf", content: "<strong>Vagal Reset:</strong> HR < 120bpm. Nature Exposure. Nasal breathing only." }
-        };
-
-        let currentPhase = 2;
-        let currentMonthKey = null;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadState();
-            startCountdown();
-        });
-
         function setPhase(phaseNum) {
-            currentPhase = phaseNum;
             document.querySelectorAll('.nav-pill').forEach(btn => btn.classList.remove('active'));
             const matchedBtn = document.getElementById(`btn-p${phaseNum}`);
             if(matchedBtn) matchedBtn.classList.add('active');
@@ -665,130 +765,68 @@
             monthContainer.innerHTML = ''; 
 
             const months = Object.keys(phaseData.months);
-            if (!months.includes(currentMonthKey)) currentMonthKey = months[0];
+            let activeMonth = localStorage.getItem('sentinel_v7_month') || months[0];
+            if (!months.includes(activeMonth)) activeMonth = months[0];
 
             months.forEach(m => {
                 const btn = document.createElement('button');
-                btn.className = `nav-pill px-4 py-1.5 rounded-lg text-xs font-bold transition-colors ${m === currentMonthKey ? 'active' : ''}`;
+                btn.className = `nav-pill px-4 py-1.5 rounded-lg text-xs font-bold transition-colors ${m === activeMonth ? 'active' : ''}`;
                 btn.innerText = m;
-                btn.onclick = () => setMonth(m);
+                btn.onclick = () => {
+                    localStorage.setItem('sentinel_v7_month', m);
+                    Array.from(monthContainer.children).forEach(b => b.classList.toggle('active', b.innerText === m));
+                    document.getElementById('focus-text').innerText = phaseData.months[m].focus;
+                };
                 monthContainer.appendChild(btn);
             });
 
-            updateDashboard();
-            localStorage.setItem('sentinel_v6_phase', phaseNum);
+            document.getElementById('focus-text').innerText = phaseData.months[activeMonth].focus;
+            localStorage.setItem('sentinel_v7_phase', phaseNum);
         }
 
-        function setMonth(monthKey) {
-            currentMonthKey = monthKey;
-            Array.from(document.getElementById('month-container').children).forEach(btn => {
-                btn.classList.toggle('active', btn.innerText === monthKey);
-            });
-            updateDashboard();
-            localStorage.setItem('sentinel_v6_month', monthKey);
-        }
-
-        function updateDashboard() {
-            const data = protocols[currentPhase].months[currentMonthKey];
-            if(!data) return;
-
-            document.getElementById('current-month-label').innerText = `${currentMonthKey} // ${protocols[currentPhase].title}`;
-            document.getElementById('focus-text').innerText = data.focus;
-
-            let monData = { ...data.mon };
-            let tueData = { ...data.tue };
-
-            if (noGiActive) {
-                monData.title = "Mat Hygiene (No-Gi)";
-                monData.content = `<span class="text-zinc-400 block mb-1">Zero kettlebells today. Focus entirely on framing, survival, and movement efficiency on the mats.</span><span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-shield-alt mr-1"></i> CNS PRESERVED</span>`;
-                
-                tueData.title = "SFG1 Skill Practice";
-                tueData.content = `<span class="text-zinc-400 block mb-1">Heavy lifting aborted due to Monday No-Gi CNS tax.</span><span class="text-zinc-400 block">Execute SFG1 skills (24kg) with crisp technique. Snatches, Cleans, TGUs. Treat as practice, not a workout.</span><span class="text-brand-purple text-xs font-bold block mt-2"><i class="fas fa-balance-scale mr-1"></i> AUTOREGULATED</span>`;
-            }
-
-            const grid = document.getElementById('weekly-grid');
-            grid.innerHTML = `
-                ${createDayCard('MON', monData.title, 'fa-dumbbell', monData.content, noGiActive ? 'border-brand-purple shadow-[0_0_15px_rgba(147,51,234,0.15)] bg-purple-950/10' : '')}
-                ${createDayCard('TUE', tueData.title, 'fa-bolt', tueData.content, noGiActive ? 'border-brand-purple shadow-[0_0_15px_rgba(147,51,234,0.15)] bg-purple-950/10' : '')}
-                ${createDayCard('WED', staticDays.WED.title, staticDays.WED.icon, `<span class="text-zinc-400 text-sm">${staticDays.WED.content}</span>`, 'opacity-70')}
-                ${createDayCard('THU', data.thu.title, 'fa-stopwatch', data.thu.content, '')}
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
-                    ${createSmallCard('FRI', staticDays.FRI.title, staticDays.FRI.icon, staticDays.FRI.content)}
-                    ${createSmallCard('SAT', staticDays.SAT.title, staticDays.SAT.icon, staticDays.SAT.content, 'border-zinc-700')}
-                    ${createSmallCard('SUN', staticDays.SUN.title, staticDays.SUN.icon, staticDays.SUN.content)}
-                </div>
-            `;
-        }
-
-        function createDayCard(day, title, icon, content, extraClasses) {
-            return `
-            <div class="day-card glass-card p-5 flex flex-col md:flex-row gap-4 md:items-center ${extraClasses}">
-                <div class="w-16 h-16 shrink-0 bg-zinc-905 border border-zinc-800 rounded-xl flex flex-col items-center justify-center shadow-inner bg-black/40">
-                    <span class="text-brand-purple font-mono font-bold text-sm">${day}</span>
-                    <i class="fas ${icon} text-zinc-600 mt-1 text-xs"></i>
-                </div>
-                <div class="flex-1">
-                    <h4 class="text-white font-display font-bold uppercase tracking-wider mb-2 text-sm">${title}</h4>
-                    <div class="text-zinc-400 text-sm leading-relaxed font-mono">${content}</div>
-                </div>
-            </div>`;
-        }
-
-        function createSmallCard(day, title, icon, content, extraClasses = 'border-transparent') {
-            return `
-            <div class="glass-card p-4 border ${extraClasses}">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-zinc-500 font-mono font-bold text-xs">${day}</span>
-                    <i class="fas ${icon} text-zinc-600 text-xs"></i>
-                </div>
-                <h4 class="text-white font-display font-bold text-xs uppercase tracking-wider mb-1">${title}</h4>
-                <p class="text-zinc-500 text-[10px] leading-tight font-mono">${content}</p>
-            </div>`;
-        }
-
-        // --- INTERACTIVE ANATOMICAL DATA SETS (UPDATED INTEGRATED MAP) ---
+        // --- INTERACTIVE ANATOMICAL DATA SETS ---
         const adaptationData = {
             brain: {
                 tag: "CNS // COMT CLEARANCE",
                 title: "Neurochemical Reset Architecture",
-                desc: "Your <strong>Slow COMT (Met/Met)</strong> profile prevents the rapid breakdown of arousal chemicals (epinephrine/dopamine). By replacing maximal 48kg nervous system stressors with structured 32kg+ submax loads, the constant threat of joint injury is removed. This lowers your baseline threat response, preventing systemic cortisol spikes and structural protective bracing before you even touch a kettlebell.",
+                desc: "Your <strong>Slow COMT (Met/Met)</strong> profile prevents the rapid breakdown of arousal chemicals (epinephrine/dopamine). By replacing maximal 48kg stressors with structured 32kg+ submax loads, the constant threat of joint injury is removed, lowering baseline cortisol.",
                 metric: "METABOLIC PATHWAY: CATECHOL FLUSH // STATUS: DECONGESTED"
             },
             shoulder: {
                 tag: "JOINT CAPSULE // ROTATOR CUFF",
                 title: "Glenohumeral Centration Protocol",
-                desc: "Dropping the systemic ego pressure of the Beast Tamer completely down-regulates the tonic guarding of your pec minor and anterior deltoids. The humerus bone can now slide cleanly backwards into its centered workspace within the glenoid socket, opening up your range of motion instantly and resolving the mechanical bicipital groove pinch.",
+                desc: "Dropping the systemic ego pressure of the Beast Tamer completely down-regulates the tonic guarding of your pec minor and anterior deltoids. The humerus bone can now slide cleanly backwards into its centered workspace within the glenoid socket.",
                 metric: "STRUCTURAL ALIGNMENT: CLOSED CIRCUIT // STATUS: RESTORED"
             },
             vagal: {
                 tag: "RESPIRATORY // DIAPHRAGM",
                 title: "CO2 Tolerance Adaptation Matrix",
-                desc: "Your <strong>80s CO2 Tolerance</strong> indicates an incredibly efficient respiratory center (medulla) and massive vagal tone. High CO2 tolerance prevents premature gasping, reduces muscle-tightening hyperventilation under fatigue, and allows your slow-clearing COMT engine to rapidly recover between high-velocity kettlebell rounds.",
-                metric: "AEROBIC CAP: DELAYED onset dyspnea // STATUS: GREEN LIGHT"
+                desc: "Your <strong>80s CO2 Tolerance</strong> indicates an incredibly efficient respiratory center (medulla) and massive vagal tone. High CO2 tolerance prevents premature gasping, reduces muscle-tightening hyperventilation under fatigue.",
+                metric: "AEROBIC CAP: DELAYED ONSET DYSPNEA // STATUS: GREEN LIGHT"
             },
             core: {
                 tag: "MYOFASCIAL LUMBOPELVIC WEDGE",
                 title: "Proximal Core Stabilization",
-                desc: "Your <strong>ACTN3 (RR)</strong> fibers require extreme proximal anchoring to safely translate force outwards. The 'Armor Light' sets reinforce your abdominal cylinder alignment to your pelvis without launching an <strong>IL-6 inflammatory reaction</strong>, providing a locked biomechanical baseline for your heavy kettlebell ladders on Tuesdays.",
+                desc: "Your <strong>ACTN3 (RR)</strong> fibers require extreme proximal anchoring to safely translate force outwards. The 'Armor Light' sets reinforce your abdominal cylinder alignment to your pelvis without launching an <strong>IL-6 inflammatory reaction</strong>.",
                 metric: "MIDLINE INTEGRITY: STUART MCGILL ARMOR // STATUS: ACTIVE"
             },
             hamstring: {
                 tag: "POSTERIOR LINE // HYPERTONICITY",
                 title: "Hamstring Guarding Decompression",
-                desc: "Prolonged static lumbar flexion (like gardening) stretches hamstrings under zero tension, triggering a pelvic-stabilizing lock in the brain. Monday's 15s Yosuda flush and Tuesday's upright Double Front Squats provide a deep, safe, active stretch that tells the brain the pelvis is secure, releasing the protective hamstring 'brake'.",
+                desc: "Prolonged static lumbar flexion stretches hamstrings under zero tension, triggering a pelvic-stabilizing lock. Monday's Yosuda flush and Double Front Squats provide a safe, active stretch that releases the protective 'brake'.",
                 metric: "NEUROLOGICAL BRAKE: OFF // STATUS: RELEASING"
             },
             knee: {
                 tag: "CONNECTIVE TISSUE // RETROPATELLAR",
                 title: "COL5A1 Connective Armor Matrix",
-                desc: "The 12-year-old meniscus tear and your dense <strong>COL5A1 tendon genetics</strong> require precise mechanical stress. By shifting to pure eccentric slow descents using the 16-inch box target and bypassing single-leg concentric grinding via a two-legged stand, you force structural adaptation and calcification in the patellar matrix without accumulating metabolic acidity.",
+                desc: "The meniscus tear and your dense <strong>COL5A1 genetics</strong> require precise mechanical stress. By shifting to pure eccentric slow descents (16-inch box target) and bypassing single-leg grinds, you force structural calcification.",
                 metric: "TENDON RESILIENCE: REACTIONAL INTEGRITY // STATUS: CALCIFYING"
             },
             ankle: {
                 tag: "STRETCH-SHORTENING // ACHILLES",
                 title: "Elastic Stiffness Optimization",
-                desc: "Integrating tib raises, stiff leg pogos, and single-leg calf raises directly into your warmup circuit optimizes the fascial matrix. This primes lower body kinetic chains for the high-velocity requirements of No-Gi BJJ movements and maximizes ankle stability against mat shear profiles.",
-                metric: "PLYOMETRIC VELOCITY: PEAK ENERGY TRANSLATION // STATUS: READY"
+                desc: "Integrating tib raises, stiff leg pogos, and single-leg calf raises directly into your warmup circuit optimizes the fascial matrix. This primes lower body kinetic chains for high-velocity No-Gi BJJ movements.",
+                metric: "PLYOMETRIC VELOCITY: PEAK TRANSLATION // STATUS: READY"
             }
         };
 
@@ -812,13 +850,13 @@
             }
         }
 
+        // --- INIT STATE ---
         function loadState() {
-            const savedPhase = localStorage.getItem('sentinel_v6_phase') || 2;
-            const savedMonth = localStorage.getItem('sentinel_v6_month') || 'MAY';
-            currentMonthKey = savedMonth;
+            setSeason('summer');
+            const savedPhase = localStorage.getItem('sentinel_v7_phase') || 2;
             setPhase(parseInt(savedPhase));
-            setMonth(currentMonthKey);
             showAdaptation('vagal'); 
+            startCountdown();
         }
 
         function startCountdown() {
@@ -845,6 +883,9 @@
                 document.getElementById("progress-bar").style.width = percentage + "%";
             }, 1000);
         }
+
+        document.addEventListener('DOMContentLoaded', loadState);
+
     </script>
 </body>
 </html>
