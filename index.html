@@ -11,10 +11,11 @@
                 extend: {
                     colors: {
                         brand: {
-                            purple: '#9333ea', // Purple 600
-                            dark: '#050507',   // Deeper black
-                            card: '#0f0f13',   // Zinc-like dark
-                            border: '#1f1f29'  // Low-key gray
+                            purple: '#9333ea', 
+                            emerald: '#10b981',
+                            dark: '#050507',   
+                            card: '#0c0c0f',   
+                            border: '#1c1c24'  
                         }
                     },
                     fontFamily: {
@@ -34,32 +35,33 @@
             background-color: #000000;
             color: #d4d4d8;
             background-image: 
-                radial-gradient(circle at 10% 30%, rgba(147, 51, 234, 0.04), transparent 30%),
-                radial-gradient(circle at 90% 70%, rgba(16, 185, 129, 0.02), transparent 30%);
+                radial-gradient(circle at 10% 25%, rgba(147, 51, 234, 0.05), transparent 30%),
+                radial-gradient(circle at 90% 75%, rgba(16, 185, 129, 0.03), transparent 35%);
             background-attachment: fixed;
             overflow-x: hidden;
         }
 
         .glass-card {
-            background: rgba(13, 13, 17, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(147, 51, 234, 0.15);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
-            transition: all 0.25s ease;
+            background: rgba(10, 10, 13, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(147, 51, 234, 0.12);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
-            border-color: rgba(147, 51, 234, 0.35);
+            border-color: rgba(147, 51, 234, 0.3);
+            box-shadow: 0 12px 40px 0 rgba(147, 51, 234, 0.05);
         }
 
         .day-card {
-            border-left: 4px solid #1f1f29;
-            transition: all 0.2s ease;
+            border-left: 4px solid #1c1c24;
+            transition: all 0.25s ease;
         }
 
         .day-card:hover {
-            transform: translateX(4px);
+            transform: translateX(6px);
             border-left-color: #9333ea;
         }
 
@@ -71,54 +73,43 @@
         .nav-pill {
             background: transparent;
             color: #71717a;
-            border: 1px solid #27272a;
-            transition: all 0.2s;
+            border: 1px solid #1c1c24;
+            transition: all 0.25s ease;
         }
         .nav-pill:hover { border-color: #9333ea; color: #fff; }
         .nav-pill.active {
             background: #9333ea;
             color: #fff;
             border-color: #9333ea;
-            box-shadow: 0 0 15px rgba(147, 51, 234, 0.25);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
         }
 
         .vertical-text { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); }
 
+        /* Highly stylized, futuristic pulse coordinates */
         .scanner-node {
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             fill: #a855f7;
-            opacity: 0.6;
+            opacity: 0.4;
         }
         .scanner-node:hover {
-            fill: #c084fc;
-            opacity: 1;
-            filter: drop-shadow(0 0 8px #9333ea);
+            fill: #d8b4fe;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 12px #9333ea);
         }
         .scanner-node.active-node {
             fill: #9333ea;
             opacity: 1;
-            filter: drop-shadow(0 0 12px #9333ea);
+            filter: drop-shadow(0 0 16px #9333ea);
         }
 
-        .btn-toggle {
-            border: 1px solid #27272a;
-            color: #71717a;
-            transition: all 0.2s;
-        }
-        .btn-toggle.active {
-            background-color: rgba(147, 51, 234, 0.1);
-            border-color: #9333ea;
-            color: #c084fc;
-            font-weight: bold;
-        }
-
-        .dice-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        .dice-shake { animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-5deg); }
-            20%, 80% { transform: translate3d(2px, 0, 0) rotate(5deg); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0) rotate(-10deg); }
-            40%, 60% { transform: translate3d(4px, 0, 0) rotate(10deg); }
+            10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-6deg); }
+            20%, 80% { transform: translate3d(3px, 0, 0) rotate(6deg); }
+            30%, 50%, 70% { transform: translate3d(-5px, 0, 0) rotate(-12deg); }
+            40%, 60% { transform: translate3d(5px, 0, 0) rotate(12deg); }
         }
     </style>
 </head>
@@ -190,7 +181,7 @@
                     <h1 class="text-3xl md:text-4xl font-display font-bold text-white tracking-tight uppercase">Purple Sentinel</h1>
                 </div>
                 <div class="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-zinc-400">
-                    <span>SYS v6.3</span>
+                    <span>SYS v6.4</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
                     <span>ACTN3(RR) / COMT(MET)</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
@@ -249,7 +240,7 @@
             </div>
         </div>
 
-        <!-- RIGHT: CONTROL STATS & STOCHASTIC ENGINE -->
+        <!-- RIGHT: CONTROL STATS & SCI-FI TOOLS -->
         <div class="lg:col-span-4 space-y-6">
             
             <!-- BIOMETRIC FEEDBACK DECK -->
@@ -281,27 +272,49 @@
                 </div>
             </div>
 
-            <!-- STOCHASTIC DFW DICE ROLLER -->
-            <div class="glass-card p-6 flex flex-col items-center justify-center text-center space-y-4 relative overflow-hidden">
-                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2 self-start">
-                    <i class="fas fa-dice text-brand-purple"></i> Stochastic DFW Selector
+            <!-- INTERACTIVE QUICK & THE DEAD TIMER -->
+            <div class="glass-card p-6 space-y-4 relative overflow-hidden">
+                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
+                    <i class="fas fa-stopwatch text-brand-purple animate-pulse"></i> Q&D Alactic Engine Timer
                 </h3>
-                <div id="dice-display" class="w-20 h-20 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center justify-center shadow-inner">
-                    <i id="dice-icon" class="fas fa-dice text-4xl text-zinc-600"></i>
+                <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-900 text-center relative">
+                    <div id="metro-flash" class="absolute inset-0 rounded-xl transition-all duration-100 opacity-10"></div>
+                    <div id="timer-display" class="font-display text-5xl font-bold text-white tracking-widest">00:00</div>
+                    <div id="timer-state" class="text-[10px] font-mono text-brand-purple tracking-widest uppercase font-bold mt-2">READY TO DEPLOY</div>
                 </div>
-                <button onclick="rollDice()" class="w-full bg-brand-purple hover:bg-purple-700 text-white font-bold text-xs py-2.5 rounded-lg transition-colors mono tracking-widest uppercase">
-                    Roll the Bones
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="startQD('sprint')" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-white font-mono text-xs font-bold py-2 px-3 rounded-lg transition-colors">
+                        15s SPRINT
+                    </button>
+                    <button onclick="startQD('tgu')" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-white font-mono text-xs font-bold py-2 px-3 rounded-lg transition-colors">
+                        TGU INTERVAL
+                    </button>
+                </div>
+                <button onclick="stopQD()" class="w-full bg-red-950/20 border border-red-900/40 hover:bg-red-950/40 text-red-400 font-bold text-xs py-2.5 rounded-lg transition-colors tracking-widest uppercase mono">
+                    ABORT SESSION
                 </button>
-                <div id="dice-result" class="w-full bg-zinc-950/60 border border-zinc-900 p-3 rounded-lg hidden text-left">
-                    <div id="dice-category" class="text-xs font-black mono text-brand-purple uppercase mb-1">DETERMINING LOAD...</div>
-                    <p id="dice-desc" class="text-[11px] text-zinc-400 leading-normal"></p>
+            </div>
+
+            <!-- DFW GRAPPLER CALCULATOR -->
+            <div class="glass-card p-6 space-y-4">
+                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
+                    <i class="fas fa-calculator text-brand-purple"></i> DFW Grappler (Double 24s)
+                </h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="generateDFW(1)" class="btn-toggle text-xs py-2 px-3 rounded-lg border border-zinc-800 font-mono">LADDERS (1,2,3)</button>
+                    <button onclick="generateDFW(2)" class="btn-toggle text-xs py-2 px-3 rounded-lg border border-zinc-800 font-mono">SETS OF 3</button>
+                </div>
+                <div id="dfw-output" class="bg-zinc-950/60 p-4 rounded-xl border border-zinc-900 text-xs font-mono space-y-2 hidden">
+                    <div class="text-brand-purple font-black uppercase">ALACTIC RECRUITMENT PATHWAY:</div>
+                    <p id="dfw-scheme" class="text-zinc-300"></p>
+                    <span class="text-[10px] text-zinc-500 block leading-relaxed italic border-t border-zinc-900 pt-2">No shoulder presses. Keeps lats flared and biceps packed.</span>
                 </div>
             </div>
 
             <!-- YOSUDA MAP ZONE CALCULATOR -->
             <div class="glass-card p-6 space-y-4">
                 <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
-                    <i class="fas fa-calculator text-brand-purple"></i> Yosuda MAP Calculator
+                    <i class="fas fa-tachometer-alt text-brand-purple"></i> Yosuda MAP Calculator
                 </h3>
                 <div class="bg-zinc-950/60 p-3 rounded-lg border border-zinc-900">
                     <label class="block text-[10px] font-mono text-zinc-500 uppercase mb-2">Maximum Aerobic Power (RPM at Lvl 10)</label>
@@ -337,7 +350,7 @@
         </div>
     </div>
 
-    <!-- HIGH-FIDELITY INTERACTIVE ANATOMICAL MATRIX -->
+    <!-- FUTURISTIC INTERACTIVE ANATOMICAL MATRIX -->
     <section class="max-w-7xl mx-auto glass-card p-6 md:p-8 mb-8">
         <div class="border-b border-zinc-800 pb-4 mb-6">
             <h3 class="font-display text-2xl font-bold text-white uppercase tracking-tight">Interactive Adaptation Matrix</h3>
@@ -345,46 +358,93 @@
         </div>
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Left: Beautiful Vector Anatomy Blueprint -->
+            <!-- Left Panel: Premium Cybernetic Vector Diagram -->
             <div class="lg:col-span-5 flex justify-center bg-zinc-950/30 p-6 rounded-2xl border border-zinc-900">
                 <svg id="human-blueprint" viewBox="0 0 240 400" class="w-full max-w-[280px] h-auto">
-                    <!-- Head & Body Lines Wireframe with glow properties -->
-                    <circle cx="120" cy="50" r="16" fill="none" stroke="#27272a" stroke-width="1.5" />
-                    <line x1="120" y1="66" x2="120" y2="170" stroke="#27272a" stroke-width="1.5" />
-                    <!-- Arms -->
-                    <line x1="120" y1="85" x2="70" y2="135" stroke="#27272a" stroke-width="1.5" />
-                    <line x1="120" y1="85" x2="170" y2="135" stroke="#27272a" stroke-width="1.5" />
-                    <!-- Torso -->
-                    <rect x="95" y="85" width="50" height="85" fill="none" stroke="#27272a" stroke-width="1" stroke-dasharray="2,2"/>
-                    <!-- Legs -->
-                    <line x1="105" y1="170" x2="90" y2="280" stroke="#27272a" stroke-width="1.5" />
-                    <line x1="135" y1="170" x2="150" y2="280" stroke="#27272a" stroke-width="1.5" />
-                    <line x1="90" y1="280" x2="85" y2="350" stroke="#27272a" stroke-width="1.5" />
-                    <line x1="150" y1="280" x2="155" y2="350" stroke="#27272a" stroke-width="1.5" />
+                    <!-- High-tech background coordinate targeting frames -->
+                    <circle cx="120" cy="200" r="180" fill="none" stroke="#121216" stroke-width="1.5" />
+                    <circle cx="120" cy="200" r="130" fill="none" stroke="#22222a" stroke-width="0.75" stroke-dasharray="3,3" />
+                    <line x1="120" y1="0" x2="120" y2="400" stroke="#121216" stroke-width="1" />
+                    <line x1="0" y1="200" x2="240" y2="200" stroke="#121216" stroke-width="1" />
 
-                    <!-- STACKED HUB TARGETS -->
-                    <!-- Brain/CNS Node -->
-                    <circle id="node-brain" class="scanner-node active-node" onclick="showAdaptation('brain')" cx="120" cy="45" r="8"/>
-                    <circle cx="120" cy="45" r="14" fill="none" stroke="#9333ea" stroke-width="1" class="animate-ping" style="animation-duration: 3s;"/>
+                    <!-- Detailed Sci-Fi Anatomical Mesh -->
+                    <path d="M120,40 L108,52 L108,62 L120,68 L132,62 L132,52 Z" fill="none" stroke="#44444f" stroke-width="1.5" /> <!-- Helm -->
+                    <circle cx="120" cy="52" r="3.5" fill="none" stroke="#9333ea" stroke-width="1" />
+                    <line x1="120" y1="68" x2="120" y2="180" stroke="#44444f" stroke-width="2.5" /> <!-- Spinal column -->
                     
-                    <!-- Left Shoulder Node (Impingement Line) -->
-                    <circle id="node-shoulder" class="scanner-node" onclick="showAdaptation('shoulder')" cx="70" cy="135" r="8" />
+                    <!-- Collar & Shoulder line -->
+                    <path d="M80,85 L120,80 L160,85" fill="none" stroke="#52525b" stroke-width="2" />
+                    <!-- Left Arm Segments -->
+                    <line x1="80" y1="85" x2="60" y2="135" stroke="#3f3f46" stroke-width="2" />
+                    <line x1="60" y1="135" x2="45" y2="185" stroke="#3f3f46" stroke-width="1.5" />
+                    <!-- Right Arm Segments -->
+                    <line x1="160" y1="85" x2="180" y2="135" stroke="#3f3f46" stroke-width="2" />
+                    <line x1="180" y1="135" x2="195" y2="185" stroke="#3f3f46" stroke-width="1.5" />
+
+                    <!-- Thoracic Cage Rib lines -->
+                    <path d="M102,100 Q120,106 138,100" fill="none" stroke="#27272a" stroke-width="1.25" />
+                    <path d="M100,115 Q120,121 140,115" fill="none" stroke="#27272a" stroke-width="1.25" />
+                    <path d="M98,130 Q120,136 142,130" fill="none" stroke="#27272a" stroke-width="1.25" />
+
+                    <!-- Pelvic Girdle Chassis -->
+                    <polygon points="90,180 150,180 138,208 102,208" fill="none" stroke="#52525b" stroke-width="2" />
+                    
+                    <!-- Left Leg Segments -->
+                    <line x1="106" y1="208" x2="90" y2="280" stroke="#3f3f46" stroke-width="2" />
+                    <line x1="90" y1="280" x2="80" y2="360" stroke="#3f3f46" stroke-width="2" />
+                    <path d="M80,360 L70,365 L83,367 Z" fill="none" stroke="#3f3f46" stroke-width="1" /> <!-- Left foot -->
+
+                    <!-- Right Leg Segments -->
+                    <line x1="134" y1="208" x2="150" y2="280" stroke="#3f3f46" stroke-width="2" />
+                    <line x1="150" y1="280" x2="160" y2="360" stroke="#3f3f46" stroke-width="2" />
+                    <path d="M160,360 L170,365 L157,367 Z" fill="none" stroke="#3f3f46" stroke-width="1" /> <!-- Right foot -->
+
+                    <!-- COORDINATE OVERLAYS (GLOWING SCANNER TARGETS) -->
+                    <!-- Brain Node -->
+                    <g class="scanner-node active-node" id="node-brain" onclick="showAdaptation('brain')">
+                        <circle cx="120" cy="52" r="7.5" />
+                        <circle cx="120" cy="52" r="14" fill="none" stroke="#9333ea" stroke-width="0.5" stroke-dasharray="3,3" />
+                    </g>
+                    
+                    <!-- Left Shoulder Node (Bicipital Space) -->
+                    <g class="scanner-node" id="node-shoulder" onclick="showAdaptation('shoulder')">
+                        <circle cx="80" cy="85" r="7.5" />
+                        <circle cx="80" cy="85" r="13" fill="none" stroke="#a855f7" stroke-width="0.5" stroke-dasharray="2,2" />
+                    </g>
 
                     <!-- Vagal/Diaphragm Node -->
-                    <circle id="node-vagal" class="scanner-node" onclick="showAdaptation('vagal')" cx="120" cy="105" r="8" />
+                    <g class="scanner-node" id="node-vagal" onclick="showAdaptation('vagal')">
+                        <circle cx="120" cy="115" r="7.5" />
+                        <circle cx="120" cy="115" r="13" fill="none" stroke="#a855f7" stroke-width="0.5" stroke-dasharray="3,3" />
+                    </g>
                     
-                    <!-- Core/Abdomen Node (Spinal Shield) -->
-                    <circle id="node-core" class="scanner-node" onclick="showAdaptation('core')" cx="120" cy="140" r="8" />
+                    <!-- Core Cylinder -->
+                    <g class="scanner-node" id="node-core" onclick="showAdaptation('core')">
+                        <circle cx="120" cy="150" r="7.5" />
+                        <circle cx="120" cy="150" r="13" fill="none" stroke="#a855f7" stroke-width="0.5" />
+                    </g>
+
+                    <!-- Left Hamstring Guarding Zone -->
+                    <g class="scanner-node" id="node-hamstring" onclick="showAdaptation('hamstring')">
+                        <circle cx="102" cy="245" r="7.5" />
+                        <circle cx="102" cy="245" r="13" fill="none" stroke="#a855f7" stroke-width="0.5" stroke-dasharray="2,2" />
+                    </g>
                     
-                    <!-- Left Knee Node (Meniscus Line) -->
-                    <circle id="node-knee" class="scanner-node" onclick="showAdaptation('knee')" cx="90" cy="280" r="8" />
+                    <!-- Left Knee Node (COL5A1) -->
+                    <g class="scanner-node" id="node-knee" onclick="showAdaptation('knee')">
+                        <circle cx="90" cy="280" r="7.5" />
+                        <circle cx="90" cy="280" r="13" fill="none" stroke="#a855f7" stroke-width="0.5" />
+                    </g>
                     
-                    <!-- Foot/Ankle Node (Toe Oblique Sling) -->
-                    <circle id="node-ankle" class="scanner-node" onclick="showAdaptation('ankle')" cx="85" cy="350" r="8" />
+                    <!-- Foot/Ankle Stiffness -->
+                    <g class="scanner-node" id="node-ankle" onclick="showAdaptation('ankle')">
+                        <circle cx="80" cy="360" r="7.5" />
+                        <circle cx="80" cy="360" r="12" fill="none" stroke="#a855f7" stroke-width="0.5" stroke-dasharray="2,2" />
+                    </g>
                 </svg>
             </div>
 
-            <!-- Right: Contextual Telemetry Feed Box -->
+            <!-- Right Panel: Contextual Telemetry Feed Box -->
             <div class="lg:col-span-7 space-y-4">
                 <div class="border border-zinc-800 bg-zinc-900/10 p-6 rounded-2xl min-h-[240px] flex flex-col justify-between">
                     <div>
@@ -404,59 +464,22 @@
     </section>
 
     <script>
-        // --- PRE-HAB PANEL TRIGGER ---
-        const warmupTrigger = document.getElementById('warmup-trigger');
-        const warmupPanel = document.getElementById('warmup-panel');
-        const warmupOverlay = document.getElementById('warmup-overlay');
-        const closeWarmup = document.getElementById('close-warmup');
-
-        function toggleWarmup() {
-            const isClosed = warmupPanel.classList.contains('translate-x-full');
-            if (isClosed) {
-                warmupPanel.classList.remove('translate-x-full');
-                warmupOverlay.classList.remove('hidden');
+        // --- STOCHASTIC DFW CALCULATOR ---
+        function generateDFW(mode) {
+            const btns = document.querySelectorAll('.btn-toggle');
+            btns.forEach(b => b.classList.remove('active'));
+            
+            const card = document.getElementById('dfw-output');
+            const schemeEl = document.getElementById('dfw-scheme');
+            
+            if(mode === 1) {
+                btns[0].classList.add('active');
+                schemeEl.innerHTML = "<strong>Sets:</strong> 5 x Ladders of 1, 2, 3 reps.<br><strong>Execution:</strong> 1 Clean + 1 Front Squat, then rest. 2 Cleans + 2 Front Squats, then rest. Repeat. Avoid grinding reps.";
             } else {
-                warmupPanel.classList.add('translate-x-full');
-                warmupOverlay.classList.add('hidden');
+                btns[1].classList.add('active');
+                schemeEl.innerHTML = "<strong>Sets:</strong> 6 sets x 3 reps across.<br><strong>Execution:</strong> Clean the double 24s, perform 3 front squats, park the bells. Rest exactly 2 mins. Maintain flawless posture.";
             }
-        }
-
-        warmupTrigger.addEventListener('click', toggleWarmup);
-        closeWarmup.addEventListener('click', toggleWarmup);
-        warmupOverlay.addEventListener('click', toggleWarmup);
-
-        // --- STOCHASTIC DICE LOGIC ---
-        function rollDice() {
-            const icon = document.getElementById('dice-icon');
-            const resultBox = document.getElementById('dice-result');
-            const catText = document.getElementById('dice-category');
-            const descText = document.getElementById('dice-desc');
-            
-            icon.classList.add('dice-shake');
-            resultBox.classList.add('hidden');
-            
-            setTimeout(() => {
-                icon.classList.remove('dice-shake');
-                const roll = Math.floor(Math.random() * 6) + 1;
-                
-                const diceClasses = ['fa-dice-one', 'fa-dice-two', 'fa-dice-three', 'fa-dice-four', 'fa-dice-five', 'fa-dice-six'];
-                icon.className = `fas ${diceClasses[roll-1]} text-4xl text-brand-purple`;
-
-                if(roll === 1 || roll === 2) {
-                    catText.innerText = "LIGHT (40-50%)";
-                    catText.className = "text-xs font-black mono text-emerald-500 uppercase mb-1";
-                    descText.innerText = "Speed & pure velocity. Target: 20-24kg. Zero CNS tax. Perfect for active recovery flush.";
-                } else if(roll === 3 || roll === 4) {
-                    catText.innerText = "MEDIUM (60-70%)";
-                    catText.className = "text-xs font-black mono text-yellow-500 uppercase mb-1";
-                    descText.innerText = "Structural density & technique focus. Target: 28kg. Symmetrical alignment emphasis.";
-                } else {
-                    catText.innerText = "HEAVY (80-85%)";
-                    catText.className = "text-xs font-black mono text-red-500 uppercase mb-1";
-                    descText.innerText = "Absolute Force. 32kg-40kg. Target 3-6 isolated perfect singles. Ensure 72-hour IL-6 window.";
-                }
-                resultBox.classList.remove('hidden');
-            }, 500);
+            card.classList.remove('hidden');
         }
 
         // --- MAP ZONE CALCULATOR ---
@@ -467,11 +490,10 @@
                 zonesCard.classList.add('hidden');
                 return;
             }
-            currentMAP = val;
             
-            document.getElementById('zone-base').innerText = `${Math.round(currentMAP * 0.7)} RPM`;
-            document.getElementById('zone-clear').innerText = `${Math.round(currentMAP * 0.9)} / ${Math.round(currentMAP * 0.5)} RPM`;
-            document.getElementById('zone-alactic').innerText = `${Math.round(currentMAP * 1.3)}+ RPM`;
+            document.getElementById('zone-base').innerText = `${Math.round(val * 0.7)} RPM`;
+            document.getElementById('zone-clear').innerText = `${Math.round(val * 0.9)} / ${Math.round(val * 0.5)} RPM`;
+            document.getElementById('zone-alactic').innerText = `${Math.round(val * 1.3)}+ RPM`;
             
             zonesCard.classList.remove('hidden');
         }
@@ -499,29 +521,62 @@
             }
         }
 
-        // --- OVERRIDE TOGGLE ---
-        let noGiActive = false;
-        document.getElementById('nogi-toggle').addEventListener('change', function(e) {
-            noGiActive = e.target.checked;
-            updateDashboard();
-        });
+        // --- QUICK & THE DEAD STOPWATCH ENGINE ---
+        let qdInterval, qdSeconds = 0, qdIsActive = false;
+        
+        function startQD(mode) {
+            stopQD();
+            qdSeconds = mode === 'sprint' ? 15 : 60;
+            qdIsActive = true;
+            
+            const display = document.getElementById('timer-display');
+            const stateEl = document.getElementById('timer-state');
+            const flasher = document.getElementById('metro-flash');
+            
+            stateEl.innerText = mode === 'sprint' ? "YOSUDA ALACTIC EXPLOSION" : "TGU CONCENTRATE";
+            stateEl.className = "text-[10px] font-mono text-emerald-400 tracking-widest uppercase font-bold mt-2 animate-pulse";
+            flasher.className = "absolute inset-0 rounded-xl transition-all duration-100 opacity-20 bg-emerald-500";
+            
+            qdInterval = setInterval(() => {
+                qdSeconds--;
+                let min = Math.floor(qdSeconds / 60);
+                let sec = qdSeconds % 60;
+                display.innerText = `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
+                
+                if(qdSeconds <= 0) {
+                    stopQD();
+                    display.innerText = "DONE";
+                    stateEl.innerText = "RECOVER AND FLUSH";
+                    stateEl.className = "text-[10px] font-mono text-zinc-500 tracking-widest uppercase font-bold mt-2";
+                }
+            }, 1000);
+        }
+        
+        function stopQD() {
+            clearInterval(qdInterval);
+            qdIsActive = false;
+            document.getElementById('timer-display').innerText = "00:00";
+            document.getElementById('timer-state').innerText = "READY TO DEPLOY";
+            document.getElementById('timer-state').className = "text-[10px] font-mono text-brand-purple tracking-widest uppercase font-bold mt-2";
+            document.getElementById('metro-flash').className = "absolute inset-0 rounded-xl transition-all duration-100 opacity-10";
+        }
 
-        // --- MASTER DATA PROGRESSION HUB (ALL 4 PHASES INTEGRATED) ---
+        // --- MONTHLY PROGRESSION DATABASE (PHASE 1 - 4 PRESERVED) ---
         const protocols = {
             1: {
                 title: "INTEGRITY",
                 months: {
                     FEB: {
                         focus: "Depth Charge & Tendon Hardening.",
-                        mon: { title: "Armor Light", content: `<span class="text-zinc-400 block mb-1">1. <strong>Mace 360s</strong>: 3x10. 2. <strong>The SFG 3 (Light)</strong>: Groove pattern.</span><span class="text-zinc-400 block">3. <strong>Gladiator DL</strong>: 2-3 sets x 5 reps/side.</span>` },
-                        tue: { title: "Heavy Mission", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press & Pull (32kg+)</strong>: Ladders (1,2,3). Symmetrical focus.</span><span class="text-zinc-400 block">2. <strong>Box Pistol (24kg)</strong>: High 24" Box. 5 sets of 3.</span>` },
-                        thu: { title: "Alactic Engine", content: `<span class="text-zinc-400 block mb-1">1. <strong>Bottoms-Up Cleans</strong> (24kg). 5x5 ramping to 8x5.</span><span class="text-zinc-400 block">2. <strong>Towel Swings</strong>. 10 sets x 5 reps (EMOM).</span>` }
+                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>Mace 360s</strong>: 3x10. 2. <strong>Q&D Flush</strong>: 15s Yosuda + 1 TGU each side.</span><span class="text-zinc-400 block">3. <strong>Gladiator DL</strong>: 2-3 sets x 5 reps/side.</span>` },
+                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press & Pull (32kg+)</strong>: Ladders (1,2,3). Symmetrical focus.</span><span class="text-zinc-400 block">2. <strong>Box Pistol (24kg)</strong>: High 24" Box. 5 sets of 3.</span>` },
+                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatches (24kg)</strong>: 15s Work : 45s Rest (EMOM style).</span><span class="text-zinc-400 block">2. <strong>Total sets:</strong> 10-15 rounds. Nose breathing only.</span>` }
                     },
                     MAR: {
                         focus: "Mastering the 32kg threshold to bypass neural inhibition.",
-                        mon: { title: "Armor Light", content: `<span class="text-zinc-400 block mb-1">1. <strong>The SFG 3 (20-24kg)</strong>: 3-5 sets of 2-3 reps. The Wedge focus.</span><span class="text-zinc-400 block">2. <strong>Statue of Liberty Walk</strong>: 3x30m @ <strong>32kg</strong>.</span>` },
-                        tue: { title: "Heavy Mission", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press & Pull (32kg+)</strong>: Ladders (1,2,3). Zero grinding reps.</span><span class="text-zinc-400 block">2. <strong>Box Pistol</strong>: 24kg @ 18-inch Box. 3-5 sets x 3 reps.</span>` },
-                        thu: { title: "Grip & Snap", content: `<span class="text-zinc-400 block mb-1">1. <strong>Heavy Suitcase Carry</strong>: 36kg (15s/side) + <strong>Static BU Hold</strong> (24kg).</span><span class="text-zinc-400 block">2. <strong>Towel Swings</strong>: 24kg. 10 sets x 5 reps. "Rip the Towel".</span>` }
+                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>The SFG 3 (20-24kg)</strong>: 3-5 sets of 2-3 reps. The Wedge focus.</span><span class="text-zinc-400 block">2. <strong>Statue of Liberty Walk</strong>: 3x30m @ <strong>32kg</strong>.</span>` },
+                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press & Pull (32kg+)</strong>: Ladders (1,2,3). Zero grinding reps.</span><span class="text-zinc-400 block">2. <strong>Box Pistol</strong>: 24kg @ 18-inch Box. 3-5 sets x 3 reps.</span>` },
+                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Heavy Suitcase Carry</strong>: 36kg (15s/side) + <strong>Snatch Work</strong>.</span><span class="text-zinc-400 block">2. <strong>Towel Swings</strong>: 24kg. 10 sets x 5 reps. "Rip the Towel".</span>` }
                     }
                 }
             },
@@ -530,21 +585,21 @@
                 months: {
                     APR: {
                         focus: "Neural Density I: Singles Initialization & QL Armor.",
-                        mon: { title: "Armor Light", content: `<span class="text-zinc-400 block mb-1">1. <strong>SFG1 Skills (24kg)</strong>: Clean & Swing precision practice.</span><span class="text-zinc-400 block">2. <strong>Gladiator DL</strong>: 3 sets x 5 reps/side (24kg+).</span>` },
-                        tue: { title: "Heavy Mission", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press/Pull (32kg+)</strong>. 3-6 Autoregulated Singles. Rest 3 mins.</span><span class="text-zinc-400 block">2. <strong>Box Pistol (32kg)</strong>: 18-inch Box. 5x3.</span>` },
-                        thu: { title: "Overspeed Eccentric", content: `<span class="text-zinc-400 block mb-1">1. <strong>Power Swings</strong> (32kg). 10 to 15 sets x 5 reps (EMOM).</span><span class="text-zinc-400 block">2. <strong>Snatch Skill</strong> (24kg). 5 sets x 5L/5R.</span>` }
+                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>Yosuda Sprint</strong>: 15s on/45s off + 1 TGU each side.</span><span class="text-zinc-400 block">2. <strong>Gladiator DL</strong>: 3 sets x 5 reps/side (24kg+).</span>` },
+                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press/Pull (32kg+)</strong>. 3-6 Autoregulated Singles. Rest 3 mins.</span><span class="text-zinc-400 block">2. <strong>Box Pistol (32kg)</strong>: 18-inch Box. 5x3.</span>` },
+                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatches</strong> (24kg). 10 to 15 sets x 5 reps.</span><span class="text-zinc-400 block">2. <strong>Focus:</strong> Perfect lockouts. No lactic accumulation.</span>` }
                     },
                     MAY: {
                         focus: "Consolidation. Autoregulated Singles & SFG1 Practice.",
-                        mon: { title: "Armor Light", content: `<span class="text-zinc-400 block mb-1">1. <strong>SFG1 Skills (24kg)</strong>: Double bell familiarization. Cleans, Squats.</span><span class="text-zinc-400 block">2. <strong>Gladiator DL</strong>: 3 sets x 5 reps/side (32kg target).</span>` },
-                        tue: { title: "Heavy Mission", content: `<span class="text-zinc-400 block mb-1">1. <strong>The SFG 3 (32kg+)</strong>: Press -> Pistol -> Pull.</span><span class="text-zinc-400 block">2. 3-6 Autoregulated Singles per side. Velocity-capped.</span>` },
-                        thu: { title: "Heavy Engine", content: `<span class="text-zinc-400 block mb-1">1. <strong>Heavy Swings</strong> (32-40kg). 10 sets x 5 reps (Dead Stop).</span><span class="text-zinc-400 block">2. <strong>Snatch Density</strong> (24kg). 10 sets x 6L/6R.</span>` }
+                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>Yosuda (15s @ Lvl 10)</strong> + 1 TGU/side (32kg) on Q&D Timer.</span><span class="text-zinc-400 block">2. <strong>DFW Grappler (GTG)</strong>: Double cleans & front squats (24s).</span>` },
+                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Autoregulated Press & Pull (32kg+)</strong>: 3-6 Singles. Rest 3 mins.</span><span class="text-zinc-400 block">2. <strong>Pistol Eccentric Override</strong>: 4x1 slow negative to 16" Box.</span>` },
+                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Intervals (24kg)</strong>: 15s Work (approx 5 reps) : 45s Rest.</span><span class="text-zinc-400 block">2. <strong>Volume:</strong> 15 sets (75 reps). Nasal breathing only.</span>` }
                     },
                     JUN: {
                         focus: "Systemic Strength for BJJ Translation.",
-                        mon: { title: "Armor Light", content: `<span class="text-zinc-400 block mb-1">1. <strong>SFG1 Skills (24-28kg)</strong>: TGU Polish. Snatch pacing.</span><span class="text-zinc-400 block">2. <strong>Gladiator DL</strong>: 3 sets x 5 reps/side.</span>` },
-                        tue: { title: "Heavy Mission", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press/Pull (32kg+)</strong>. 3-6 Singles. Rest 3-5 mins.</span><span class="text-brand-purple text-xs font-bold block mt-2">RULE #3: The second your velocity drops, terminate the block.</span>` },
-                        thu: { title: "Volume Tolerance", content: `<span class="text-zinc-400 block mb-1">1. <strong>Swings</strong> (32-40kg). 10 sets x 10 reps (100 total).</span><span class="text-zinc-400 block">2. <strong>Snatch</strong> (24kg). 5 sets x 10L/10R.</span>` }
+                        mon: { title: "Q&D Alactic Flush", content: `<span class="text-zinc-400 block mb-1">1. <strong>SFG1 Skills (24-28kg)</strong>: TGU Polish. Snatch pacing.</span><span class="text-zinc-400 block">2. <strong>Gladiator DL</strong>: 3 sets x 5 reps/side.</span>` },
+                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Press/Pull (32kg+)</strong>. 3-6 Singles. Rest 3-5 mins.</span><span class="text-brand-purple text-xs font-bold block mt-2">RULE #3: The second your velocity drops, terminate the block.</span>` },
+                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatches</strong> (24kg). 5 sets x 10L/10R.</span><span class="text-zinc-400 block">2. <strong>Engine check:</strong> Strict 5-min cadence.</span>` }
                     }
                 }
             },
@@ -554,14 +609,14 @@
                     JUL: {
                         focus: "Transitioning to Double 24kg Volume.",
                         mon: { title: "SFG1 Skill", content: `<span class="text-zinc-400 block mb-1">1. <strong>SFG1 Skills (2x24kg)</strong>: Double Cleans & Squats. 3-5 sets of 2-3 reps.</span><span class="text-zinc-400 block">2. <strong>Static Rack Holds</strong>: 3x20s @ <strong>32kg</strong>.</span>` },
-                        tue: { title: "Heavy Mission", content: `<span class="text-zinc-400 block mb-1">1. <strong>Double Press/Front Squat</strong> (2x24kg). 5 sets x 2-3 reps.</span><span class="text-zinc-400 block">2. <strong>Pull-Up (32kg+)</strong>: Heavy Singles. 3-6 reps total.</span>` },
-                        thu: { title: "Snatch Engine", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Intervals</strong> (24kg). 15s Work : 45s Rest.</span><span class="text-zinc-400 block">2. Volume: 10-15 Rounds. Explosive power, zero burn.</span>` }
+                        tue: { title: "Heavy Beastly 3", content: `<span class="text-zinc-400 block mb-1">1. <strong>Double Press/Front Squat</strong> (2x24kg). 5 sets x 2-3 reps.</span><span class="text-zinc-400 block">2. <strong>Pull-Up (32kg+)</strong>: Heavy Singles. 3-6 reps total.</span>` },
+                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Intervals</strong> (24kg). 15s Work : 45s Rest.</span><span class="text-zinc-400 block">2. Volume: 10-15 Rounds. Explosive power, zero burn.</span>` }
                     },
                     AUG: {
                         focus: "Double 24kg Density for SFG1.",
                         mon: { title: "SFG1 Skill", content: `<span class="text-zinc-400 block mb-1">1. <strong>The SFG 3 (24kg)</strong>: TGU and Snatch pacing.</span><span class="text-zinc-400 block">2. <strong>Waiter Walks</strong>: 3x30m @ 24kg.</span>` },
                         tue: { title: "SFG1 Heavy Day", content: `<span class="text-zinc-400 block mb-1">1. <strong>Double Clean & Press</strong> (2x24kg). 5 ladders of 1, 2, 3.</span><span class="text-zinc-400 block">2. <strong>Double Front Squat</strong> (2x24kg). 3 sets x 5 reps.</span>` },
-                        thu: { title: "Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Intervals</strong> (24kg). 15s Work : 30s Rest.</span><span class="text-zinc-400 block">2. Volume: 12-18 Rounds. Rhythm and relaxation.</span>` }
+                        thu: { title: "A+A Snatch Capacity", content: `<span class="text-zinc-400 block mb-1">1. <strong>Snatch Intervals</strong> (24kg). 15s Work : 30s Rest.</span><span class="text-zinc-400 block">2. Volume: 12-18 Rounds. Rhythm and relaxation.</span>` }
                     },
                     SEP: {
                         focus: "SFG1 Peaking and The 5-Minute Snatch Test.",
@@ -691,7 +746,7 @@
             </div>`;
         }
 
-        // --- INTERACTIVE ANATOMICAL DATA SETS ---
+        // --- INTERACTIVE ANATOMICAL DATA SETS (UPDATED INTEGRATED MAP) ---
         const adaptationData = {
             brain: {
                 tag: "CNS // COMT CLEARANCE",
@@ -717,6 +772,12 @@
                 desc: "Your <strong>ACTN3 (RR)</strong> fibers require extreme proximal anchoring to safely translate force outwards. The 'Armor Light' sets reinforce your abdominal cylinder alignment to your pelvis without launching an <strong>IL-6 inflammatory reaction</strong>, providing a locked biomechanical baseline for your heavy kettlebell ladders on Tuesdays.",
                 metric: "MIDLINE INTEGRITY: STUART MCGILL ARMOR // STATUS: ACTIVE"
             },
+            hamstring: {
+                tag: "POSTERIOR LINE // HYPERTONICITY",
+                title: "Hamstring Guarding Decompression",
+                desc: "Prolonged static lumbar flexion (like gardening) stretches hamstrings under zero tension, triggering a pelvic-stabilizing lock in the brain. Monday's 15s Yosuda flush and Tuesday's upright Double Front Squats provide a deep, safe, active stretch that tells the brain the pelvis is secure, releasing the protective hamstring 'brake'.",
+                metric: "NEUROLOGICAL BRAKE: OFF // STATUS: RELEASING"
+            },
             knee: {
                 tag: "CONNECTIVE TISSUE // RETROPATELLAR",
                 title: "COL5A1 Connective Armor Matrix",
@@ -740,12 +801,14 @@
 
             document.querySelectorAll('.scanner-node').forEach(node => {
                 node.classList.remove('active-node');
-                node.setAttribute('fill', '#a855f7');
+                const circ = node.querySelector('circle');
+                if (circ) circ.setAttribute('fill', '#a855f7');
             });
             const activeNode = document.getElementById(`node-${key}`);
             if(activeNode) {
                 activeNode.classList.add('active-node');
-                activeNode.setAttribute('fill', '#9333ea');
+                const circ = activeNode.querySelector('circle');
+                if (circ) circ.setAttribute('fill', '#9333ea');
             }
         }
 
@@ -755,7 +818,7 @@
             currentMonthKey = savedMonth;
             setPhase(parseInt(savedPhase));
             setMonth(currentMonthKey);
-            showAdaptation('vagal'); // Default to highlighting the new vagal/CO2 node
+            showAdaptation('vagal'); 
         }
 
         function startCountdown() {
@@ -781,45 +844,6 @@
                 const percentage = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
                 document.getElementById("progress-bar").style.width = percentage + "%";
             }, 1000);
-        }
-
-        // --- AUDIO METRONOME FOR KB MAP ---
-        let audioCtx, metronomeInterval, isPlaying = false, bpm = 15;
-        function initAudio() { if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-        function playClick() {
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.frequency.value = 1200; osc.type = 'sine';
-            gain.gain.setValueAtTime(1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-            osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.1);
-            const flasher = document.getElementById('metro-flash');
-            flasher.classList.add('bg-brand-purple');
-            setTimeout(() => flasher.classList.remove('bg-brand-purple'), 100);
-        }
-        function toggleMetronome() {
-            initAudio();
-            const btnIcon = document.getElementById('metro-icon');
-            const btnText = document.getElementById('metro-text');
-            if(isPlaying) {
-                clearInterval(metronomeInterval); isPlaying = false;
-                btnIcon.className = 'fas fa-play mr-2 text-emerald-500';
-                btnText.innerText = 'START PACE';
-            } else {
-                if(audioCtx.state === 'suspended') audioCtx.resume();
-                playClick();
-                metronomeInterval = setInterval(playClick, 60000 / bpm);
-                isPlaying = true;
-                btnIcon.className = 'fas fa-stop mr-2 text-red-500';
-                btnText.innerText = 'STOP PACE';
-            }
-        }
-        function adjustBPM(amount) {
-            bpm = Math.max(10, Math.min(60, bpm + amount));
-            document.getElementById('bpm-display').innerText = bpm;
-            if(isPlaying) { toggleMetronome(); toggleMetronome(); }
         }
     </script>
 </body>
