@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OP: PURPLE SENTINEL // COMMAND CONSOLE v9.0</title>
+    <title>OP: PURPLE SENTINEL // COMMAND CONSOLE v9.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -216,7 +216,7 @@
                     <h1 class="text-3xl md:text-4xl font-display font-bold text-white tracking-tight uppercase">Purple Sentinel</h1>
                 </div>
                 <div class="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-zinc-400">
-                    <span>SYS v9.0</span>
+                    <span>SYS v9.1</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
                     <span>ACTN3(RR) / COMT(MET)</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
@@ -293,31 +293,11 @@
             <div class="flex justify-between items-end mb-2 px-2">
                 <div>
                     <h2 class="font-display text-2xl font-bold text-white uppercase tracking-tight">Weekly Tactical Grid</h2>
-                    <p id="current-month-label" class="font-mono text-xs text-brand-purple tracking-widest uppercase mt-1">ACTIVE HORIZON // MON-WED-SAT BJJ</p>
+                    <p id="current-schedule-label" class="font-mono text-xs text-brand-purple tracking-widest uppercase mt-1">ACTIVE HORIZON // MON-WED-SAT BJJ</p>
                 </div>
             </div>
             <div class="grid gap-4" id="weekly-grid">
                 <!-- JS Injects Dynamic Day Cards Here -->
-            </div>
-            
-            <!-- MONTHLY STRATAGEM -->
-            <div class="glass-card p-6 border-l-4 border-l-brand-purple">
-                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase mb-3 flex items-center gap-2">
-                    <i class="fas fa-crosshairs text-brand-purple"></i> Monthly Stratagem
-                </h3>
-                
-                <div class="flex flex-wrap gap-2 mb-3">
-                    <button onclick="setPhase(1)" id="btn-p1" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest active">Ph 1: Integrity</button>
-                    <button onclick="setPhase(2)" id="btn-p2" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">Ph 2: Density</button>
-                    <button onclick="setPhase(3)" id="btn-p3" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">Ph 3: SFG1 Prep</button>
-                    <button onclick="setPhase(4)" id="btn-p4" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">Ph 4: Taper</button>
-                </div>
-
-                <div id="month-container" class="flex flex-wrap gap-2 p-2 bg-black/40 border border-zinc-900 rounded mb-3">
-                    <!-- JS Injects Month Pills Here -->
-                </div>
-
-                <p id="focus-text" class="text-xs text-zinc-300 leading-relaxed font-mono mt-2 pt-2 border-t border-zinc-800">Select a month to load targeted genetic and systemic directives.</p>
             </div>
         </div>
 
@@ -371,7 +351,7 @@
                 </div>
             </div>
 
-            <!-- V9.0 TOOL SELECTOR -->
+            <!-- V9.1 TOOL SELECTOR -->
             <div class="flex space-x-1 border-b border-zinc-800 pb-2 overflow-x-auto">
                 <button onclick="switchTool('ai')" id="tool-btn-ai" class="py-2 px-3 text-[10px] md:text-xs font-bold tab-nav uppercase active mono whitespace-nowrap text-brand-purple">Sentinel AI</button>
                 <button onclick="switchTool('qd')" id="tool-btn-qd" class="py-2 px-3 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">Q&D Loop</button>
@@ -380,7 +360,7 @@
                 <button onclick="switchTool('map')" id="tool-btn-map" class="py-2 px-3 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">M.A.P.</button>
             </div>
 
-            <!-- TOOL: SENTINEL AI GEM (V9.0) -->
+            <!-- TOOL: SENTINEL AI GEM (V9.1) -->
             <div id="tool-ai" class="glass-card p-5 relative overflow-hidden flex flex-col h-[400px]">
                 <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2 mb-4 shrink-0">
                     <i class="fas fa-brain text-brand-purple animate-pulse"></i> Sentinel AI Architect
@@ -495,7 +475,7 @@
                     <button id="btn-kb" onclick="setModality('kb')" class="btn-toggle flex-1 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider font-mono">KETTLEBELL</button>
                 </div>
                 <div class="bg-zinc-950/60 p-3 rounded-lg border border-zinc-900">
-                    <label id="input-label" class="block text-[10px] font-mono text-zinc-500 uppercase mb-2">Maximum Aerobic Power (RPM at Lvl 10)</label>
+                    <label id="input-label" class="block text-[10px] font-mono text-zinc-500 uppercase mb-2">Maximum Aerobic Power (Lvl 10)</label>
                     <div class="relative flex items-center">
                         <input type="number" id="map-input" placeholder="e.g. 60" class="w-full bg-zinc-950 border border-zinc-800 rounded py-2 px-3 text-white font-mono text-sm focus:border-brand-purple focus:outline-none text-center" oninput="calculateMAP()">
                         <span id="input-unit" class="absolute right-3 text-xs font-mono text-zinc-600 font-bold">RPM</span>
@@ -706,12 +686,19 @@
             const apiKey = ""; // Set by environment
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
-            const systemPrompt = `You are SENTINEL AI, an elite clinical strength and bioenergetics architect.
-            The user is a 44yo male, BJJ practitioner. 
-            Genetics: ACTN3 (RR) Fast-Twitch, Slow COMT (requires 1:4:2 breathing to clear adrenaline), IL-6 GG (Hyper-inflammatory, needs 72hr between heavy systemic loads), COL5A1 (stiff tendons, needs eccentrics/isometrics). 
-            Current program: Beast Tamer (48kg press/pull/pistol) + SFG1 Snatch prep. 
-            Options: Beastly 3 (Absolute Force), DFW Grappler (Density/Armor), Hybrid Peak, Q&D Alactic. 
-            Your role: Assess their input (like CO2 scores, joint aches, or fatigue) and prescribe or audit their training for the day. Be concise, clinical, authoritative, and brief (1-3 paragraphs max).`;
+            // Pull instructions from the hosted markdown file logic
+            const systemPrompt = `You are SENTINEL ARCHITECT, an elite Clinical Strength Strategist and Bioenergetics Coach. Your tone is authoritative, concise, surgical, and heavily grounded in the sports science of Yuri Verkhoshansky, Pavel Tsatsouline, Dr. Kelly Starrett, and Sam Calavitta. You do not use fluff, cheerleading, or "bro-science." You provide absolute clarity on volume, load, and energy system management.
+
+The user is a 44-year-old male business owner and Brazilian Jiu-Jitsu practitioner ("The Sentinel"). You must filter EVERY recommendation through his specific genetic and structural profile: ACTN3 (RR) Elite Fast Twitch, COMT (Met/Met) Slow Clearance, IL-6 (GG) Hyper-Inflammatory, COL5A1 Stiff Tendons. 
+
+Do NOT prescribe traditional bodybuilding. Select from: Beastly 3 (Absolute Force), DFW Grappler (Density/Armor), Hybrid Peak, Q&D Alactic Loop, Tucson 15/15 Snatch Pacer, or The Wrench (Pre-hab).
+
+CHECK CO2 TOLERANCE (VAGAL TONE):
+GREEN (CO2 > 60s): CNS is fully potentiated. Cleared for Beastly 3, Hybrid Peak, or up to 5 full rounds of the Q&D Loop.
+AMBER (CO2 40-59s): CNS is stable but accumulating fatigue. Forced DFW Grappler or reduced volume (max 2-3 rounds) of Alactic Engine. No 1RM attempts.
+RED (CO2 < 40s): CNS is exhausted (Redline). Forced Triage. 1:4:2 breathing, passive hangs, Light Yosuda flush. Zero heavy lifting.
+
+When answering, give a singular tactical directive. Provide the 'Why'. Remind them of the Rule #3 Kill-Switch (stop if velocity drops).`;
 
             const co2Val = document.getElementById('co2-input').value || 'Unknown';
             const contextData = `[SYSTEM TELEMETRY - Season: ${currentSeason}, Active Strategy: ${currentStrategy}, CO2 Tolerance: ${co2Val}s]\nUser Input: `;
@@ -806,7 +793,7 @@
             document.getElementById('btn-season-summer').classList.toggle('active', season === 'summer');
             document.getElementById('btn-season-winter').classList.toggle('active', season === 'winter');
 
-            document.getElementById('current-month-label').innerText = season === 'summer' ? "SUMMER CADENCE // MON-WED-SAT BJJ" : "AUTUMN CADENCE // MON-SAT BJJ";
+            document.getElementById('current-schedule-label').innerText = season === 'summer' ? "SUMMER CADENCE // MON-WED-SAT BJJ" : "AUTUMN CADENCE // MON-SAT BJJ";
             document.getElementById('wed-fallback-row').style.display = season === 'summer' ? 'flex' : 'none';
 
             updateDashboard();
@@ -1032,10 +1019,10 @@
 
         // --- QUICK & THE DEAD 8-MIN CYCLICAL LOOP TIMER LOGIC WITH AUDIO ---
         let qdTimerInterval, qdTimeSeconds = 0, qdLoopIsActive = false;
-        let currentQdPhase = -1; // To track phase changes for audio
+        let currentQdPhase = -1; 
         
         function updateTimelineVisual(currentSecond) {
-            const loopSecond = currentSecond % 480; // 8 minutes = 480s
+            const loopSecond = currentSecond % 480; 
             
             for (let i = 0; i <= 5; i++) {
                 const el = document.getElementById(`step-${i}`);
@@ -1045,7 +1032,7 @@
 
             let activeStep = -1;
             let stepLabel = "";
-            let newPhase = -1; // 0=Sprint, 1=TGU, 2=Rest, 3=Prep
+            let newPhase = -1; 
 
             if (loopSecond >= 0 && loopSecond < 45) {
                 activeStep = 0;
@@ -1077,13 +1064,11 @@
                 stepLabel = `COMT ADRENALINE DEEP REST // T-${480 - loopSecond}s`; newPhase = 2;
             }
 
-            // Trigger Audio on Phase Change
             if (newPhase !== currentQdPhase && qdTimeSeconds > 0) {
                 currentQdPhase = newPhase;
                 if (newPhase === 0) playSprintBeep();
                 else if (newPhase === 1) playTguBeep();
                 else if (newPhase === 2) playRestBeep();
-                // Prep phase (3) is silent or could have a tick. Let's keep silent to focus.
             }
 
             if (activeStep !== -1) {
@@ -1107,12 +1092,12 @@
                 document.getElementById('timer-state').innerText = "SYSTEM PAUSED";
             } else {
                 requestWakeLock();
-                initAudio(); // Required to unlock audio context on user gesture
+                initAudio(); 
                 qdLoopIsActive = true;
                 btn.innerText = "PAUSE LOOP";
                 btn.className = "flex-1 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-brand-purple font-mono text-xs font-bold py-2.5 rounded-lg transition-all tracking-widest uppercase";
                 
-                if(qdTimeSeconds === 0) playSprintBeep(); // Start beep
+                if(qdTimeSeconds === 0) playSprintBeep(); 
 
                 qdTimerInterval = setInterval(() => {
                     qdTimeSeconds++;
@@ -1160,22 +1145,22 @@
                 stateEl.innerText = `WORK RIGHT // T-${15 - loopSec}s`;
                 stateEl.className = "text-xs font-mono text-white tracking-widest uppercase font-bold mt-2 relative z-10";
                 flashEl.style.opacity = '0.3';
-                newPhase = 0; // Work
+                newPhase = 0; 
             } else if (loopSec >= 15 && loopSec < 30) {
                 stateEl.innerText = `REST // T-${30 - loopSec}s`;
                 stateEl.className = "text-xs font-mono text-zinc-500 tracking-widest uppercase font-bold mt-2 relative z-10";
                 flashEl.style.opacity = '0';
-                newPhase = 1; // Rest
+                newPhase = 1; 
             } else if (loopSec >= 30 && loopSec < 45) {
                 stateEl.innerText = `WORK LEFT // T-${45 - loopSec}s`;
                 stateEl.className = "text-xs font-mono text-white tracking-widest uppercase font-bold mt-2 relative z-10";
                 flashEl.style.opacity = '0.3';
-                newPhase = 0; // Work
+                newPhase = 0; 
             } else if (loopSec >= 45 && loopSec < 60) {
                 stateEl.innerText = `REST // T-${60 - loopSec}s`;
                 stateEl.className = "text-xs font-mono text-zinc-500 tracking-widest uppercase font-bold mt-2 relative z-10";
                 flashEl.style.opacity = '0';
-                newPhase = 1; // Rest
+                newPhase = 1; 
                 
                 if(loopSec === 59) {
                     totalSnatchReps += 14;
@@ -1212,7 +1197,7 @@
                 initAudio();
                 snatchActive = true;
                 btn.innerText = "PAUSE";
-                if(snatchSeconds === 0) playSprintBeep(); // Start beep
+                if(snatchSeconds === 0) playSprintBeep(); 
                 
                 snatchInterval = setInterval(() => {
                     snatchSeconds++;
@@ -1241,51 +1226,57 @@
         function loadState() {
             setSeason('summer');
             setLiftStrategy('beastly');
-            const savedPhase = localStorage.getItem('sentinel_v7_phase') || 2;
-            setPhase(parseInt(savedPhase));
             startCountdown();
-            switchTool('ai'); // Open on new feature
+            switchTool('ai'); 
             switchDocTab('singles');
         }
 
-        document.addEventListener('DOMContentLoaded', loadState);
+        function startCountdown() {
+            const target = new Date("October 2, 2026 00:00:00").getTime();
+            const start = new Date("January 25, 2026 00:00:00").getTime();
+            const totalDuration = target - start;
 
-        // --- MONTHS NAVIGATION ---
-        const protocols = {
-            1: { title: "INTEGRITY", months: { FEB: { focus: "Depth Charge & Tendon Hardening." }, MAR: { focus: "Mastering the 32kg threshold to bypass neural inhibition." }}},
-            2: { title: "DENSITY & VOLUME", months: { APR: { focus: "Neural Density I: Singles Initialization & QL Armor." }, MAY: { focus: "Consolidation. Autoregulated Singles & SFG1 Practice." }, JUN: { focus: "Systemic Strength for BJJ Translation." }}},
-            3: { title: "SFG1 PREP", months: { JUL: { focus: "Transitioning to Double 24kg Volume." }, AUG: { focus: "Double 24kg Density for SFG1." }, SEP: { focus: "SFG1 Peaking and The 5-Minute Snatch Test." }}},
-            4: { title: "TAPER & PEAK", months: { OCT: { focus: "SFG1 Certification Weekend." }}}
-        };
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = target - now;
 
-        function setPhase(phaseNum) {
-            document.querySelectorAll('.nav-pill').forEach(btn => btn.classList.remove('active'));
-            const matchedBtn = document.getElementById(`btn-p${phaseNum}`);
-            if(matchedBtn) matchedBtn.classList.add('active');
+                if (distance < 0) {
+                    document.getElementById("countdown").innerHTML = "TESTING ACTIVE";
+                    return;
+                }
 
-            const phaseData = protocols[phaseNum];
-            const monthContainer = document.getElementById('month-container');
-            monthContainer.innerHTML = ''; 
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-            const months = Object.keys(phaseData.months);
-            let activeMonth = localStorage.getItem('sentinel_v7_month') || months[0];
-            if (!months.includes(activeMonth)) activeMonth = months[0];
-
-            months.forEach(m => {
-                const btn = document.createElement('button');
-                btn.className = `nav-pill px-4 py-1.5 rounded-lg text-xs font-bold transition-colors ${m === activeMonth ? 'active' : ''}`;
-                btn.innerText = m;
-                btn.onclick = () => {
-                    localStorage.setItem('sentinel_v7_month', m);
-                    Array.from(monthContainer.children).forEach(b => b.classList.toggle('active', b.innerText === m));
-                    document.getElementById('focus-text').innerText = phaseData.months[m].focus;
-                };
-                monthContainer.appendChild(btn);
-            });
-
-            document.getElementById('focus-text').innerText = phaseData.months[activeMonth].focus;
-            localStorage.setItem('sentinel_v7_phase', phaseNum);
+                document.getElementById("countdown").innerHTML = `T-${days}D ${hours}H`;
+                
+                const elapsed = now - start;
+                const percentage = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
+                document.getElementById("progress-bar").style.width = percentage + "%";
+            }, 1000);
         }
+
+        // --- PRE-HAB PANEL LOGIC ---
+        const warmupTrigger = document.getElementById('warmup-trigger');
+        const warmupPanel = document.getElementById('warmup-panel');
+        const warmupOverlay = document.getElementById('warmup-overlay');
+        const closeWarmup = document.getElementById('close-warmup');
+
+        function toggleWarmup() {
+            if (warmupPanel.classList.contains('translate-x-full')) {
+                warmupPanel.classList.remove('translate-x-full');
+                warmupOverlay.classList.remove('hidden');
+            } else {
+                warmupPanel.classList.add('translate-x-full');
+                warmupOverlay.classList.add('hidden');
+            }
+        }
+
+        warmupTrigger.addEventListener('click', toggleWarmup);
+        closeWarmup.addEventListener('click', toggleWarmup);
+        warmupOverlay.addEventListener('click', toggleWarmup);
+
+        document.addEventListener('DOMContentLoaded', loadState);
 
     </script>
 </body>
