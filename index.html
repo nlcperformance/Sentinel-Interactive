@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OP: PURPLE SENTINEL // COMMAND CONSOLE v8.1</title>
+    <title>OP: PURPLE SENTINEL // COMMAND CONSOLE v9.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -123,6 +123,29 @@
             30%, 50%, 70% { transform: translate3d(-5px, 0, 0) rotate(-12deg); }
             40%, 60% { transform: translate3d(5px, 0, 0) rotate(12deg); }
         }
+
+        .chat-bubble {
+            border-radius: 12px;
+            padding: 12px 16px;
+            max-width: 85%;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .chat-user {
+            background-color: #27272a;
+            color: #fff;
+            border-bottom-right-radius: 2px;
+            align-self: flex-end;
+        }
+        .chat-ai {
+            background-color: rgba(147, 51, 234, 0.15);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            color: #e5e5e5;
+            border-bottom-left-radius: 2px;
+            align-self: flex-start;
+        }
+        .chat-ai strong { color: #d8b4fe; }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8 selection:bg-brand-purple selection:text-white">
@@ -193,11 +216,11 @@
                     <h1 class="text-3xl md:text-4xl font-display font-bold text-white tracking-tight uppercase">Purple Sentinel</h1>
                 </div>
                 <div class="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-zinc-400">
-                    <span>SYS v8.1</span>
+                    <span>SYS v9.0</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
                     <span>ACTN3(RR) / COMT(MET)</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
-                    <span class="text-brand-purple font-black">SFG1 OPTIMIZED</span>
+                    <span class="text-brand-purple font-black">AI INTEGRATED</span>
                 </div>
             </div>
 
@@ -276,6 +299,26 @@
             <div class="grid gap-4" id="weekly-grid">
                 <!-- JS Injects Dynamic Day Cards Here -->
             </div>
+            
+            <!-- MONTHLY STRATAGEM -->
+            <div class="glass-card p-6 border-l-4 border-l-brand-purple">
+                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase mb-3 flex items-center gap-2">
+                    <i class="fas fa-crosshairs text-brand-purple"></i> Monthly Stratagem
+                </h3>
+                
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <button onclick="setPhase(1)" id="btn-p1" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest active">Ph 1: Integrity</button>
+                    <button onclick="setPhase(2)" id="btn-p2" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">Ph 2: Density</button>
+                    <button onclick="setPhase(3)" id="btn-p3" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">Ph 3: SFG1 Prep</button>
+                    <button onclick="setPhase(4)" id="btn-p4" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">Ph 4: Taper</button>
+                </div>
+
+                <div id="month-container" class="flex flex-wrap gap-2 p-2 bg-black/40 border border-zinc-900 rounded mb-3">
+                    <!-- JS Injects Month Pills Here -->
+                </div>
+
+                <p id="focus-text" class="text-xs text-zinc-300 leading-relaxed font-mono mt-2 pt-2 border-t border-zinc-800">Select a month to load targeted genetic and systemic directives.</p>
+            </div>
         </div>
 
         <!-- RIGHT: CONTROL STATS & SCI-FI TOOLS -->
@@ -328,19 +371,43 @@
                 </div>
             </div>
 
-            <!-- V8.0 TOOL SELECTOR -->
-            <div class="flex space-x-1.5 border-b border-zinc-800 pb-2">
-                <button onclick="switchTool('qd')" id="tool-btn-qd" class="flex-1 py-2 text-[10px] md:text-xs font-bold tab-nav uppercase active mono whitespace-nowrap">Q&D Loop</button>
-                <button onclick="switchTool('snatch')" id="tool-btn-snatch" class="flex-1 py-2 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">Snatch Pacer</button>
-                <button onclick="switchTool('dfw')" id="tool-btn-dfw" class="flex-1 py-2 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">DFW Dice</button>
-                <button onclick="switchTool('map')" id="tool-btn-map" class="flex-1 py-2 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">M.A.P.</button>
+            <!-- V9.0 TOOL SELECTOR -->
+            <div class="flex space-x-1 border-b border-zinc-800 pb-2 overflow-x-auto">
+                <button onclick="switchTool('ai')" id="tool-btn-ai" class="py-2 px-3 text-[10px] md:text-xs font-bold tab-nav uppercase active mono whitespace-nowrap text-brand-purple">Sentinel AI</button>
+                <button onclick="switchTool('qd')" id="tool-btn-qd" class="py-2 px-3 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">Q&D Loop</button>
+                <button onclick="switchTool('snatch')" id="tool-btn-snatch" class="py-2 px-3 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">Snatch Pacer</button>
+                <button onclick="switchTool('dfw')" id="tool-btn-dfw" class="py-2 px-3 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">DFW Dice</button>
+                <button onclick="switchTool('map')" id="tool-btn-map" class="py-2 px-3 text-[10px] md:text-xs font-bold tab-nav uppercase mono whitespace-nowrap">M.A.P.</button>
+            </div>
+
+            <!-- TOOL: SENTINEL AI GEM (V9.0) -->
+            <div id="tool-ai" class="glass-card p-5 relative overflow-hidden flex flex-col h-[400px]">
+                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2 mb-4 shrink-0">
+                    <i class="fas fa-brain text-brand-purple animate-pulse"></i> Sentinel AI Architect
+                </h3>
+                
+                <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 mb-4 pr-2 font-mono flex flex-col">
+                    <div class="chat-bubble chat-ai">
+                        <strong>SENTINEL AI:</strong> Systems initialized. Upload your daily telemetry (CO2, joint status, fatigue levels, or training ideas) and I will audit your parameters against the Slow COMT / ACTN3 / IL-6 blueprint.
+                    </div>
+                </div>
+
+                <div class="relative shrink-0">
+                    <input type="text" id="chat-input" placeholder="Query Sentinel AI..." class="w-full bg-zinc-950 border border-zinc-700 rounded-lg py-3 px-4 text-white text-sm mono focus:border-brand-purple focus:outline-none pr-12" onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                    <button onclick="sendChatMessage()" class="absolute right-2 top-2 w-8 h-8 flex items-center justify-center bg-brand-purple text-white rounded-md hover:bg-purple-700 transition">
+                        <i class="fas fa-paper-plane text-xs"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- TOOL: Q&D ALACTIC 8-MIN LOOP TIMER -->
-            <div id="tool-qd" class="glass-card p-6 space-y-4 relative overflow-hidden">
-                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
-                    <i class="fas fa-stopwatch text-brand-purple animate-pulse"></i> Q&D Alactic Loop Timer
-                </h3>
+            <div id="tool-qd" class="glass-card p-6 space-y-4 relative overflow-hidden hidden">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
+                        <i class="fas fa-stopwatch text-brand-purple animate-pulse"></i> Q&D Alactic Loop Timer
+                    </h3>
+                    <i class="fas fa-volume-up text-zinc-600 text-xs"></i>
+                </div>
                 <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-900 text-center relative">
                     <div id="metro-flash" class="absolute inset-0 rounded-xl transition-all duration-100 opacity-10"></div>
                     <div id="timer-display" class="font-display text-5xl font-bold text-white tracking-widest">00:00</div>
@@ -360,13 +427,17 @@
                     <button id="btn-qd-control" onclick="toggleQDLoop()" class="flex-1 bg-brand-purple hover:bg-purple-700 text-white font-mono text-xs font-bold py-2.5 rounded-lg transition-all tracking-widest uppercase">START LOOP</button>
                     <button onclick="stopQDLoop()" class="bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 font-bold text-xs py-2.5 px-4 rounded-lg transition-colors">RESET</button>
                 </div>
+                <p class="text-[9px] text-zinc-600 text-center mono uppercase mt-2">Audio Cues & Wake Lock Enabled</p>
             </div>
 
             <!-- TOOL: SFG1 SNATCH PACER -->
             <div id="tool-snatch" class="glass-card p-6 space-y-4 relative overflow-hidden hidden">
-                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
-                    <i class="fas fa-bell text-brand-emerald animate-pulse"></i> Tucson 15/15 Snatch Engine
-                </h3>
+                <div class="flex justify-between items-center">
+                    <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase flex items-center gap-2">
+                        <i class="fas fa-bell text-brand-emerald animate-pulse"></i> Tucson 15/15 Snatch Engine
+                    </h3>
+                    <i class="fas fa-volume-up text-zinc-600 text-xs"></i>
+                </div>
                 <p class="text-[10px] text-zinc-500 font-mono leading-relaxed">The ultimate SFG1 Snatch Prep tool. 15s WORK / 15s REST. Alternating arms. Target: 7-8 reps per 15s block.</p>
                 
                 <div class="bg-zinc-950 p-6 rounded-xl border border-zinc-900 text-center relative">
@@ -384,6 +455,7 @@
                         RESET
                     </button>
                 </div>
+                <p class="text-[9px] text-zinc-600 text-center mono uppercase mt-2">Audio Cues & Wake Lock Enabled</p>
             </div>
 
             <!-- TOOL: DFW GRAPPLER CALCULATOR -->
@@ -443,34 +515,6 @@
                         <span id="zone-alactic" class="text-white font-mono font-bold">-- RPM</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- NAVIGATION: MONTHS -->
-            <div class="glass-card p-6 highlight-border">
-                <h3 class="font-mono text-xs font-bold text-zinc-400 tracking-widest uppercase mb-3 flex items-center gap-2">
-                    <i class="fas fa-calendar-alt text-brand-purple"></i> Tactical Progression Phase
-                </h3>
-                
-                <div class="flex flex-wrap gap-2 mb-3">
-                    <button onclick="setPhase(1)" id="btn-p1" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest active">
-                        Ph 1: Integrity
-                    </button>
-                    <button onclick="setPhase(2)" id="btn-p2" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">
-                        Ph 2: Density
-                    </button>
-                    <button onclick="setPhase(3)" id="btn-p3" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">
-                        Ph 3: SFG1 Prep
-                    </button>
-                    <button onclick="setPhase(4)" id="btn-p4" class="nav-pill px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest">
-                        Ph 4: Taper
-                    </button>
-                </div>
-
-                <div id="month-container" class="flex flex-wrap gap-2 p-2 bg-black/40 border border-zinc-900 rounded mb-3">
-                    <!-- JS Injects Month Pills Here -->
-                </div>
-
-                <p id="focus-text" class="text-xs text-zinc-300 leading-relaxed font-mono mt-2 pt-2 border-t border-zinc-800">Select a month to load targeted genetic and systemic directives.</p>
             </div>
 
         </div>
@@ -569,6 +613,136 @@
     </section>
 
     <script>
+        // --- SCREEN WAKE LOCK API ---
+        let wakeLock = null;
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    console.log('Wake Lock is active');
+                }
+            } catch (err) {
+                console.log(`Wake Lock Error: ${err.name}, ${err.message}`);
+            }
+        }
+        function releaseWakeLock() {
+            if (wakeLock !== null) {
+                wakeLock.release().then(() => {
+                    wakeLock = null;
+                    console.log('Wake Lock released');
+                });
+            }
+        }
+
+        // --- AUDIO METRONOME / BEEP API ---
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playTone(freq, type, duration, vol = 1) {
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function playSprintBeep() {
+            // Triple high beep
+            playTone(900, 'square', 0.1);
+            setTimeout(() => playTone(900, 'square', 0.1), 150);
+            setTimeout(() => playTone(1200, 'square', 0.2), 300);
+        }
+
+        function playTguBeep() {
+            // Single sharp medium beep
+            playTone(600, 'triangle', 0.4);
+        }
+
+        function playRestBeep() {
+            // Low descending beep
+            playTone(300, 'sine', 0.6);
+        }
+
+        // --- SENTINEL AI GEM (GEMINI API) ---
+        async function fetchWithBackoff(url, options, retries = 5) {
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    console.log(`Sentinel AI connection retry ${i + 1}...`);
+                    await new Promise(res => setTimeout(res, delays[i]));
+                }
+            }
+        }
+
+        async function sendChatMessage() {
+            const inputEl = document.getElementById('chat-input');
+            const message = inputEl.value.trim();
+            if (!message) return;
+
+            // Display user message
+            const chatBox = document.getElementById('chat-messages');
+            chatBox.innerHTML += `<div class="chat-bubble chat-user">${message}</div>`;
+            inputEl.value = '';
+            
+            // Add loading indicator
+            const loadingId = 'loading-' + Date.now();
+            chatBox.innerHTML += `<div id="${loadingId}" class="chat-bubble chat-ai italic opacity-70">ANALYZING BIOMETRICS...</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const apiKey = ""; // Set by environment
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const systemPrompt = `You are SENTINEL AI, an elite clinical strength and bioenergetics architect.
+            The user is a 44yo male, BJJ practitioner. 
+            Genetics: ACTN3 (RR) Fast-Twitch, Slow COMT (requires 1:4:2 breathing to clear adrenaline), IL-6 GG (Hyper-inflammatory, needs 72hr between heavy systemic loads), COL5A1 (stiff tendons, needs eccentrics/isometrics). 
+            Current program: Beast Tamer (48kg press/pull/pistol) + SFG1 Snatch prep. 
+            Options: Beastly 3 (Absolute Force), DFW Grappler (Density/Armor), Hybrid Peak, Q&D Alactic. 
+            Your role: Assess their input (like CO2 scores, joint aches, or fatigue) and prescribe or audit their training for the day. Be concise, clinical, authoritative, and brief (1-3 paragraphs max).`;
+
+            const co2Val = document.getElementById('co2-input').value || 'Unknown';
+            const contextData = `[SYSTEM TELEMETRY - Season: ${currentSeason}, Active Strategy: ${currentStrategy}, CO2 Tolerance: ${co2Val}s]\nUser Input: `;
+
+            const payload = {
+                contents: [{ parts: [{ text: contextData + message }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const data = await fetchWithBackoff(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                document.getElementById(loadingId).remove();
+                
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    const aiText = data.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
+                    chatBox.innerHTML += `<div class="chat-bubble chat-ai"><strong>SENTINEL:</strong><br>${aiText}</div>`;
+                } else {
+                    chatBox.innerHTML += `<div class="chat-bubble chat-ai text-red-400"><strong>SYSTEM ERROR:</strong> Telemetry unreadable. Please recalibrate.</div>`;
+                }
+            } catch (err) {
+                document.getElementById(loadingId).remove();
+                chatBox.innerHTML += `<div class="chat-bubble chat-ai text-red-400"><strong>CONNECTION FAILED:</strong> Neural link severed. Try again.</div>`;
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
         // --- CALENDAR ENGINES ---
         let currentSeason = 'summer'; 
         let currentStrategy = 'beastly'; 
@@ -704,15 +878,12 @@
         let currentModality = 'yosuda';
 
         function switchTool(tool) {
-            document.getElementById('tool-btn-map').classList.toggle('active', tool === 'map');
-            document.getElementById('tool-btn-dfw').classList.toggle('active', tool === 'dfw');
-            document.getElementById('tool-btn-qd').classList.toggle('active', tool === 'qd');
-            document.getElementById('tool-btn-snatch').classList.toggle('active', tool === 'snatch');
-            
-            document.getElementById('tool-map').classList.toggle('hidden', tool !== 'map');
-            document.getElementById('tool-dfw').classList.toggle('hidden', tool !== 'dfw');
-            document.getElementById('tool-qd').classList.toggle('hidden', tool !== 'qd');
-            document.getElementById('tool-snatch').classList.toggle('hidden', tool !== 'snatch');
+            ['map', 'dfw', 'qd', 'snatch', 'ai'].forEach(t => {
+                const btn = document.getElementById('tool-btn-' + t);
+                const panel = document.getElementById('tool-' + t);
+                if(btn) btn.classList.toggle('active', t === tool);
+                if(panel) panel.classList.toggle('hidden', t !== tool);
+            });
         }
 
         function switchDocTab(tab) {
@@ -828,9 +999,11 @@
                 return;
             }
             
-            document.getElementById('zone-base').innerText = `${Math.round(val * 0.7)} RPM`;
-            document.getElementById('zone-clear').innerText = `${Math.round(val * 0.9)} / ${Math.round(val * 0.5)} RPM`;
-            document.getElementById('zone-alactic').innerText = `${Math.round(val * 1.3)}+ RPM`;
+            const unit = currentModality === 'yosuda' ? 'RPM' : 'SPM';
+            
+            document.getElementById('zone-base').innerText = `${Math.round(val * 0.7)} ${unit}`;
+            document.getElementById('zone-clear').innerText = `${Math.round(val * 0.9)} / ${Math.round(val * 0.5)} ${unit}`;
+            document.getElementById('zone-alactic').innerText = `${Math.round(val * 1.3)}+ ${unit}`;
             
             zonesCard.classList.remove('hidden');
         }
@@ -857,11 +1030,12 @@
             }
         }
 
-        // --- QUICK & THE DEAD 8-MIN CYCLICAL LOOP TIMER LOGIC ---
+        // --- QUICK & THE DEAD 8-MIN CYCLICAL LOOP TIMER LOGIC WITH AUDIO ---
         let qdTimerInterval, qdTimeSeconds = 0, qdLoopIsActive = false;
+        let currentQdPhase = -1; // To track phase changes for audio
         
         function updateTimelineVisual(currentSecond) {
-            const loopSecond = currentSecond % 480;
+            const loopSecond = currentSecond % 480; // 8 minutes = 480s
             
             for (let i = 0; i <= 5; i++) {
                 const el = document.getElementById(`step-${i}`);
@@ -871,35 +1045,45 @@
 
             let activeStep = -1;
             let stepLabel = "";
+            let newPhase = -1; // 0=Sprint, 1=TGU, 2=Rest, 3=Prep
 
             if (loopSecond >= 0 && loopSecond < 45) {
                 activeStep = 0;
-                if (loopSecond < 15) stepLabel = `YOSUDA ALACTIC SPRINT (LEFT) // T-${15 - loopSecond}s`;
-                else stepLabel = `TURKISH GET-UP L CONCENTRATE // T-${45 - loopSecond}s`;
+                if (loopSecond < 15) { stepLabel = `YOSUDA ALACTIC SPRINT (LEFT) // T-${15 - loopSecond}s`; newPhase = 0; }
+                else { stepLabel = `TURKISH GET-UP L CONCENTRATE // T-${45 - loopSecond}s`; newPhase = 1; }
             } else if (loopSecond >= 45 && loopSecond < 60) {
                 activeStep = 1;
-                stepLabel = `PREPARE NEXT SET L // T-${60 - loopSecond}s`;
+                stepLabel = `PREPARE NEXT SET L // T-${60 - loopSecond}s`; newPhase = 3;
             } else if (loopSecond >= 60 && loopSecond < 105) {
                 activeStep = 1;
-                if (loopSecond < 75) stepLabel = `YOSUDA ALACTIC SPRINT (LEFT) // T-${75 - loopSecond}s`;
-                else stepLabel = `TURKISH GET-UP L CONCENTRATE // T-${105 - loopSecond}s`;
+                if (loopSecond < 75) { stepLabel = `YOSUDA ALACTIC SPRINT (LEFT) // T-${75 - loopSecond}s`; newPhase = 0; }
+                else { stepLabel = `TURKISH GET-UP L CONCENTRATE // T-${105 - loopSecond}s`; newPhase = 1; }
             } else if (loopSecond >= 105 && loopSecond < 240) {
                 activeStep = 2;
-                stepLabel = `COMT ADRENALINE DEEP REST // T-${240 - loopSecond}s`;
+                stepLabel = `COMT ADRENALINE DEEP REST // T-${240 - loopSecond}s`; newPhase = 2;
             } else if (loopSecond >= 240 && loopSecond < 285) {
                 activeStep = 3;
-                if (loopSecond < 255) stepLabel = `YOSUDA ALACTIC SPRINT (RIGHT) // T-${255 - loopSecond}s`;
-                else stepLabel = `TURKISH GET-UP R CONCENTRATE // T-${285 - loopSecond}s`;
+                if (loopSecond < 255) { stepLabel = `YOSUDA ALACTIC SPRINT (RIGHT) // T-${255 - loopSecond}s`; newPhase = 0; }
+                else { stepLabel = `TURKISH GET-UP R CONCENTRATE // T-${285 - loopSecond}s`; newPhase = 1; }
             } else if (loopSecond >= 285 && loopSecond < 300) {
                 activeStep = 1; 
-                stepLabel = `PREPARE NEXT SET R // T-${300 - loopSecond}s`;
+                stepLabel = `PREPARE NEXT SET R // T-${300 - loopSecond}s`; newPhase = 3;
             } else if (loopSecond >= 300 && loopSecond < 345) {
                 activeStep = 4;
-                if (loopSecond < 315) stepLabel = `YOSUDA ALACTIC SPRINT (RIGHT) // T-${315 - loopSecond}s`;
-                else stepLabel = `TURKISH GET-UP R CONCENTRATE // T-${345 - loopSecond}s`;
+                if (loopSecond < 315) { stepLabel = `YOSUDA ALACTIC SPRINT (RIGHT) // T-${315 - loopSecond}s`; newPhase = 0; }
+                else { stepLabel = `TURKISH GET-UP R CONCENTRATE // T-${345 - loopSecond}s`; newPhase = 1; }
             } else if (loopSecond >= 345 && loopSecond < 480) {
                 activeStep = 5;
-                stepLabel = `COMT ADRENALINE DEEP REST // T-${480 - loopSecond}s`;
+                stepLabel = `COMT ADRENALINE DEEP REST // T-${480 - loopSecond}s`; newPhase = 2;
+            }
+
+            // Trigger Audio on Phase Change
+            if (newPhase !== currentQdPhase && qdTimeSeconds > 0) {
+                currentQdPhase = newPhase;
+                if (newPhase === 0) playSprintBeep();
+                else if (newPhase === 1) playTguBeep();
+                else if (newPhase === 2) playRestBeep();
+                // Prep phase (3) is silent or could have a tick. Let's keep silent to focus.
             }
 
             if (activeStep !== -1) {
@@ -917,14 +1101,19 @@
             if (qdLoopIsActive) {
                 clearInterval(qdTimerInterval);
                 qdLoopIsActive = false;
+                releaseWakeLock();
                 btn.innerText = "RESUME LOOP";
                 btn.className = "flex-1 bg-brand-purple hover:bg-purple-700 text-white font-mono text-xs font-bold py-2.5 rounded-lg transition-all tracking-widest uppercase";
                 document.getElementById('timer-state').innerText = "SYSTEM PAUSED";
             } else {
+                requestWakeLock();
+                initAudio(); // Required to unlock audio context on user gesture
                 qdLoopIsActive = true;
                 btn.innerText = "PAUSE LOOP";
                 btn.className = "flex-1 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-brand-purple font-mono text-xs font-bold py-2.5 rounded-lg transition-all tracking-widest uppercase";
                 
+                if(qdTimeSeconds === 0) playSprintBeep(); // Start beep
+
                 qdTimerInterval = setInterval(() => {
                     qdTimeSeconds++;
                     let min = Math.floor(qdTimeSeconds / 60);
@@ -937,8 +1126,10 @@
 
         function stopQDLoop() {
             clearInterval(qdTimerInterval);
+            releaseWakeLock();
             qdLoopIsActive = false;
             qdTimeSeconds = 0;
+            currentQdPhase = -1;
             document.getElementById('timer-display').innerText = "00:00";
             document.getElementById('timer-state').innerText = "READY TO DEPLOY";
             document.getElementById('btn-qd-control').innerText = "START LOOP";
@@ -950,8 +1141,9 @@
             }
         }
 
-        // --- SFG1 SNATCH ENGINE (TUCSON 15/15) ---
+        // --- SFG1 SNATCH ENGINE WITH AUDIO ---
         let snatchInterval, snatchSeconds = 0, snatchActive = false, totalSnatchReps = 0;
+        let currentSnatchPhase = -1;
 
         function updateSnatchVisuals(sec) {
             const loopSec = sec % 60;
@@ -962,29 +1154,39 @@
             let displaySec = sec % 60;
             document.getElementById('snatch-timer-display').innerText = `${min < 10 ? '0' : ''}${min}:${displaySec < 10 ? '0' : ''}${displaySec}`;
 
+            let newPhase = -1;
+
             if (loopSec >= 0 && loopSec < 15) {
                 stateEl.innerText = `WORK RIGHT // T-${15 - loopSec}s`;
                 stateEl.className = "text-xs font-mono text-white tracking-widest uppercase font-bold mt-2 relative z-10";
                 flashEl.style.opacity = '0.3';
-                flashEl.className = "absolute inset-0 rounded-xl transition-all duration-300 bg-brand-emerald";
+                newPhase = 0; // Work
             } else if (loopSec >= 15 && loopSec < 30) {
                 stateEl.innerText = `REST // T-${30 - loopSec}s`;
                 stateEl.className = "text-xs font-mono text-zinc-500 tracking-widest uppercase font-bold mt-2 relative z-10";
                 flashEl.style.opacity = '0';
+                newPhase = 1; // Rest
             } else if (loopSec >= 30 && loopSec < 45) {
                 stateEl.innerText = `WORK LEFT // T-${45 - loopSec}s`;
                 stateEl.className = "text-xs font-mono text-white tracking-widest uppercase font-bold mt-2 relative z-10";
                 flashEl.style.opacity = '0.3';
-                flashEl.className = "absolute inset-0 rounded-xl transition-all duration-300 bg-brand-emerald";
+                newPhase = 0; // Work
             } else if (loopSec >= 45 && loopSec < 60) {
                 stateEl.innerText = `REST // T-${60 - loopSec}s`;
                 stateEl.className = "text-xs font-mono text-zinc-500 tracking-widest uppercase font-bold mt-2 relative z-10";
                 flashEl.style.opacity = '0';
+                newPhase = 1; // Rest
                 
                 if(loopSec === 59) {
                     totalSnatchReps += 14;
                     document.getElementById('snatch-rep-count').innerText = totalSnatchReps;
                 }
+            }
+
+            if (newPhase !== currentSnatchPhase && sec > 0) {
+                currentSnatchPhase = newPhase;
+                if (newPhase === 0) playSprintBeep();
+                else if (newPhase === 1) playRestBeep();
             }
             
             if (sec >= 600) { // 10 Minutes
@@ -1002,24 +1204,30 @@
             if (snatchActive) {
                 clearInterval(snatchInterval);
                 snatchActive = false;
+                releaseWakeLock();
                 btn.innerText = "RESUME";
                 document.getElementById('snatch-timer-state').innerText = "SYSTEM PAUSED";
             } else {
+                requestWakeLock();
+                initAudio();
                 snatchActive = true;
                 btn.innerText = "PAUSE";
+                if(snatchSeconds === 0) playSprintBeep(); // Start beep
                 
                 snatchInterval = setInterval(() => {
-                    updateSnatchVisuals(snatchSeconds);
                     snatchSeconds++;
+                    updateSnatchVisuals(snatchSeconds);
                 }, 1000);
             }
         }
 
         function resetSnatchTimer() {
             clearInterval(snatchInterval);
+            releaseWakeLock();
             snatchActive = false;
             snatchSeconds = 0;
             totalSnatchReps = 0;
+            currentSnatchPhase = -1;
             document.getElementById('snatch-timer-display').innerText = "00:00";
             document.getElementById('snatch-timer-state').innerText = "AWAITING START";
             document.getElementById('snatch-timer-state').className = "text-xs font-mono text-zinc-500 tracking-widest uppercase font-bold mt-2 relative z-10";
@@ -1036,54 +1244,9 @@
             const savedPhase = localStorage.getItem('sentinel_v7_phase') || 2;
             setPhase(parseInt(savedPhase));
             startCountdown();
-            switchTool('qd'); 
+            switchTool('ai'); // Open on new feature
             switchDocTab('singles');
         }
-
-        function startCountdown() {
-            const target = new Date("October 2, 2026 00:00:00").getTime();
-            const start = new Date("January 25, 2026 00:00:00").getTime();
-            const totalDuration = target - start;
-
-            setInterval(() => {
-                const now = new Date().getTime();
-                const distance = target - now;
-
-                if (distance < 0) {
-                    document.getElementById("countdown").innerHTML = "TESTING ACTIVE";
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-                document.getElementById("countdown").innerHTML = `T-${days}D ${hours}H`;
-                
-                const elapsed = now - start;
-                const percentage = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
-                document.getElementById("progress-bar").style.width = percentage + "%";
-            }, 1000);
-        }
-
-        // --- PRE-HAB PANEL LOGIC ---
-        const warmupTrigger = document.getElementById('warmup-trigger');
-        const warmupPanel = document.getElementById('warmup-panel');
-        const warmupOverlay = document.getElementById('warmup-overlay');
-        const closeWarmup = document.getElementById('close-warmup');
-
-        function toggleWarmup() {
-            if (warmupPanel.classList.contains('translate-x-full')) {
-                warmupPanel.classList.remove('translate-x-full');
-                warmupOverlay.classList.remove('hidden');
-            } else {
-                warmupPanel.classList.add('translate-x-full');
-                warmupOverlay.classList.add('hidden');
-            }
-        }
-
-        warmupTrigger.addEventListener('click', toggleWarmup);
-        closeWarmup.addEventListener('click', toggleWarmup);
-        warmupOverlay.addEventListener('click', toggleWarmup);
 
         document.addEventListener('DOMContentLoaded', loadState);
 
